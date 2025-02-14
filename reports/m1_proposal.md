@@ -16,34 +16,19 @@ With the rise of the Pokémon TCG and mobile games, more people are diving into 
 
 ## Section 2: Description of the Data
 
-> Include how many rows and columns there are in the dataset (that you plan to use). There should be a clear link to how the dataset and the variables you describe will help you solve your target audience's problem. Indicate at least one new variable that you are planning to derive/engineer for your visualizations. If there are no new variables to derive, indicate what additional information you would have liked to have in the dataset to better be able to answer your research questions (even if it is impossible for you to engineer it). If you are planning to visualize a lot of columns, provide a high level description of the variable types rather than listing every single column. For example, indicate that the dataset contains a variety of categorical variables for demographics and provide a brief list rather than describing every single variable. You may also want to consider visualizing a smaller set of variables given the short duration of this project. To be able to include this information you might wish to perform a brief exploratory data analysis for you to grasp what could be interesting variables to look at in your data. We will not be grading the EDA aspect, but include your EDA notebooks in the public GitHub repo, so that you have everything in one place.
+We will be visualizing a dataset with 801 rows and 41 columns. Each of the 801 rows represents a single Pokémon, and each Pokémon has 41 variables that describe its characteristics. This comprehensive set of characteristics will make it easy for our target audience (new Pokémon player) to fully understand the Pokémon that are of interest to them. The primary attributes we will focus on visualizing for each Pokémon include:
 
-We will be visualizing a dataset of 801 pokemons. Each pokemon has 41 variables that describe its characteristics, which we think could be useful for pokemon users to compare their different pokemons.
+- `name`: The English name of the Pokémon
+- `type1`, `type2`: The primary and secondary type (eg. Fire, Water, Grass, etc.)
+- `height_m`, `weight_kg`: The height and weight
+- `against_?`: Eighteen features that denote the damage taken against an attack of a particular type
+- `hp`, `attack`, `defense`, `sp_attack`, `sp_defense`, `speed`: Base stats of the Pokémon
+- `generation`: The video game generation that the Pokémon was introduced
+- `is_legendary`: Whether the Pokémon is legendary or not
 
-Pokemon variables 
-Variables and descriptions are from: https://www.kaggle.com/datasets/rounakbanik/pokemon/data
+The dataset also includes several attributes that could be of interested during our visualization, such as `percentage_male`, `capture_rate`, `base_egg_steps`, `abilities`, `experience_growth`, and `base_happiness`. More information about the dataset can be found from the [Kaggle source](https://www.kaggle.com/datasets/rounakbanik/pokemon/data).
 
-- name: The English name of the Pokemon
-- pokedex_number: The entry number of the Pokemon in the National Pokedex
-- percentage_male: The percentage of the species that are male. Blank if the Pokemon is genderless.
-- type1: The Primary Type of the Pokemon
-- type2: The Secondary Type of the Pokemon
-- height_m: Height of the Pokemon in metres
-- weight_kg: The Weight of the Pokemon in kilograms
-- capture_rate: Capture Rate of the Pokemon
-- base_egg_steps: The number of steps required to hatch an egg of the Pokemon
-- abilities: A list of abilities that the Pokemon is capable of having
-- experience_growth: The Experience Growth of the Pokemon
-- base_happiness: Base Happiness of the Pokemon
-- against_?: Eighteen features that denote the amount of damage taken against an attack of a particular type including: bug, dark, dragon, electric, fairy, fight, fire, flying, ghost, grass, ground, ice, normal, poison, psychic, rock, steel, water.
-- hp: The Base HP of the Pokemon
-- attack: The Base Attack of the Pokemon
-- defense: The Base Defense of the Pokemon
-- sp_attack: The Base Special Attack of the Pokemon
-- sp_defense: The Base Special Defense of the Pokemon
-- speed: The Base Speed of the Pokemon
-- generation: The numbered generation which the Pokemon was first introduced
-- is_legendary: Denotes if the Pokemon is legendary.
+Using this data we will also derive new variables, such as the sum of the Pokémon's base stats (`base_stat_total`) as a method of ranking Pokémon overall. It would also be useful to track which Pokémon evolve into other Pokémon (`evolves_to`, `evolves_from`), but this is a complex feature to engineer. It would be interesting to see how these new features could help new Pokémon players better understand the Pokémon.
 
 ## Section 3: Research Questions and Usage Scenarios
 

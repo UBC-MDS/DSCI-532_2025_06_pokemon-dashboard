@@ -1,0 +1,5 @@
+name: '532_Pokemon'
+channels:
+  - conda-forge
+  - defaults
+dependencies:

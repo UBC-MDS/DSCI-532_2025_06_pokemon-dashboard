@@ -2,7 +2,7 @@ from dash import Dash, html, dcc
 
 import dash_bootstrap_components as dbc
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
+app = Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
 # Layout
 app.layout = dbc.Container([

@@ -40,11 +40,11 @@ Using this data we will also derive new variables, such as the sum of the Pokém
 > - A hypothetical walkthrough of how the user would accomplish those tasks with your app
 > - The outcome/action that the user would take based on the information they find in the app
 
-John loved Pokémon as a child in the 90’s, but after growing up he’s forgotten about most of the Pokémon he once had and hasn’t kept track of the new Pokémon that have been added in more recent generations. He wants an easy, accessible method to explore the stats of different Pokémon, and see any changes that exist across different generations.
+John loved Pokémon as a child in the 90’s, but after growing up he’s forgotten about most of the Pokémon he once had and hasn’t kept track of the new Pokémon that have been added in more recent generations. He wants an easy, accessible method to explore the stats of different Pokémon, and see any key differences across different generations.
 
-Once John visits our Pokémon dashboard he’ll see………………………………………………
+Once John visits our Pokémon dashboard he’ll see a spot to select the Pokémon he's interested in exploring. Different filters to compare this selected Pokémon to other generations, types of Pokémon, or based on specific characteristics like attack, defense, height, weight, etc. He decides to select Charmander as the main Pokémon to explore as it was his favourite as a kid. Now he can see how effective Charmander (and fire types generally) are against other Pokémon types. He also views Charmander on the overall scatter plot of attack vs. defense to see where he falls. He also chooses to see weight plotted on the boxplot to compare all the types against one another and see how Charmander fairs. After exploring he then decides to check out a different fire type, Vulpix.
 
-Based on his time spent exploring different Pokémon in our app, John has a clearer understanding of various Pokémon stats such as height, weight, attack, defense, abilities, and more. Armed with this new knowledge, he feels confident in continuing to build his Pokémon team and battle others. He’s also excited to put this new knowledge to practice and see how his Pokémon perform.
+Based on his time spent exploring different Pokémon in our app, John has a clearer understanding of various Pokémon stats such as height, weight, attack, defense, abilities, and more. Armed with this new knowledge, he feels confident in continuing to build his Pokémon team and battle others. He’s also excited to put this new knowledge to practice and see how his Pokémon perform. Time to catch 'em all!
 
 ## Section 4: App Sketch & Brief Description
 

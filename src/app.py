@@ -1,6 +1,12 @@
-from dash import Dash, html, dcc
-
 import dash_bootstrap_components as dbc
+from dash import Dash, dcc, html, dcc, Input, Output, State, callback
+from dash.exceptions import PreventUpdate
+import pandas as pd
+
+df=pd.read_csv('data/raw/pokemon.csv')
+a=df[["name"]]
+a=a.rename(columns={"name":"label"})
+a["value"]=df['pokedex_number']
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
@@ -11,24 +17,6 @@ app.layout = dbc.Container([
     html.P('Pokédash is your personal Pokéguide to understand your lil pocket monster'),
     html.P("This is an app created by Agam, Albert, Nicholas and Shannon")]),
     html.Label('Filter for weight in kg'),
-    dcc.RangeSlider(
-        min=1,
-        max=1000,
-        #value=[1, 3],  # A list since it's a range slideer
-        step=1,  # The step between values
-        marks={1: '>=1', 1000: '1000'},  # The marks/labels on the slider
-        tooltip={'always_visible': True, 'placement': 'bottom'}  # Show the current values
-    ),
-    html.Br(),  # Add whitespace; br = "break"
-    html.Label('Filter for Height in cm'),
-    dcc.RangeSlider(
-        min=4,
-        max=2000,
-        #value=[1, 3],  # A list since it's a range slideer
-        step=1,  # The step between values
-        marks={4: '4', 2000: '2000'},  # The marks/labels on the slider
-        tooltip={'always_visible': True, 'placement': 'bottom'}  # Show the current values
-    ),
     html.Label('Select type'),
     # dcc.Dropdown(
     #     options=['New York City', 'Montreal', 'San Francisco'],
@@ -42,8 +30,21 @@ app.layout = dbc.Container([
                  'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'],
         multi=True,
         placeholder='Select multiple types'
-    )
+    ),
+    html.Div([
+        "Single dynamic Dropdown",
+        dcc.Dropdown(id="my-dynamic-dropdown")
+    ]),
 ])
+options=a.to_dict(orient='records')
+@callback(
+    Output("my-dynamic-dropdown", "options"),
+    Input("my-dynamic-dropdown", "search_value")
+)
+def update_options(search_value):
+    if not search_value:
+        raise PreventUpdate
+    return [o for o in options if search_value in o["label"]]
 
 # Server side callbacks/reactivity
 # ...

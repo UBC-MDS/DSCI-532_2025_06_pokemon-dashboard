@@ -13,13 +13,8 @@ a = df[["name"]]
 a = a.rename(columns={"name": "label"})
 a["value"] = df["pokedex_number"]
 
-# Calculate average stats for each Pokémon
-stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp']
+stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 df['average_stat'] = df[stats_columns].mean(axis=1)
-
-# Sort by average stats
-top_7 = df[['name', 'average_stat']].sort_values(by='average_stat', ascending=False).head(7)
-
 
 scatterplot_options = [
     {"label": "Attack", "value": "attack"},
@@ -33,24 +28,24 @@ scatterplot_options = [
 ]
 
 type_options = [
-    {'label': 'Normal', 'value': 'Normal'}, 
-    {'label': 'Fire', 'value': 'Fire'}, 
-    {'label': 'Water', 'value': 'Water'}, 
-    {'label': 'Electric', 'value': 'Electric'}, 
-    {'label': 'Grass', 'value': 'Grass'}, 
-    {'label': 'Ice', 'value': 'Ice'}, 
-    {'label': 'Fighting', 'value': 'Fighting'}, 
-    {'label': 'Poison', 'value': 'Poison'}, 
-    {'label': 'Ground', 'value': 'Ground'}, 
-    {'label': 'Flying', 'value': 'Flying'}, 
-    {'label': 'Psychic', 'value': 'Psychic'}, 
-    {'label': 'Bug', 'value': 'Bug'}, 
-    {'label': 'Rock', 'value': 'Rock'}, 
-    {'label': 'Ghost', 'value': 'Ghost'}, 
-    {'label': 'Dragon', 'value': 'Dragon'}, 
-    {'label': 'Dark', 'value': 'Dark'}, 
-    {'label': 'Steel', 'value': 'Steel'}, 
-    {'label': 'Fairy', 'value': 'Fairy'}
+    {'label': 'Normal', 'value': 'normal'}, 
+    {'label': 'Fire', 'value': 'fire'}, 
+    {'label': 'Water', 'value': 'water'}, 
+    {'label': 'Electric', 'value': 'electric'}, 
+    {'label': 'Grass', 'value': 'grass'}, 
+    {'label': 'Ice', 'value': 'ice'}, 
+    {'label': 'Fighting', 'value': 'fighting'}, 
+    {'label': 'Poison', 'value': 'poison'}, 
+    {'label': 'Ground', 'value': 'ground'}, 
+    {'label': 'Flying', 'value': 'flying'}, 
+    {'label': 'Psychic', 'value': 'psychic'}, 
+    {'label': 'Bug', 'value': 'bug'}, 
+    {'label': 'Rock', 'value': 'rock'}, 
+    {'label': 'Ghost', 'value': 'ghost'}, 
+    {'label': 'Dragon', 'value': 'dragon'}, 
+    {'label': 'Dark', 'value': 'dark'}, 
+    {'label': 'Steel', 'value': 'steel'}, 
+    {'label': 'Fairy', 'value': 'fairy'}
 ]
 
 # Layout
@@ -73,7 +68,7 @@ app.layout = dbc.Container([
                 html.Div([
                     html.H2("Choose your Pokemon"),
                     html.Div(
-                        dcc.Dropdown(id="pokemon_dropdown", search_value="Pikachu", value=25),
+                        dcc.Dropdown(id="pokemon_dropdown", search_value="Pikachu", value=25, clearable=False),
                         style={'width': '100%'}
                     ),
                     html.Div(id="output_area"),
@@ -82,8 +77,23 @@ app.layout = dbc.Container([
 
             # Image
             html.Div(
-                html.Img(id='pokemon_image', style={'width': '75%'}),
-                style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            html.Img(id='pokemon_image', style={'width': '75%'}),
+                            width=6,
+                            style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}
+                        ),
+                        dbc.Col(
+                            dbc.Row([ 
+                                dbc.Col(html.Img(id='pokemon_type_1')),
+                                dbc.Col(html.Img(id='pokemon_type_2')) if not None else None
+                            ], justify="center", align="center"),
+                        ),
+                    ],
+                    justify="center",
+                    align="center",
+                )
             ),
             
             # Generation Dropdown
@@ -91,9 +101,10 @@ app.layout = dbc.Container([
                 html.H2("Select Generation"),
                 dcc.Dropdown(
                     id="generation_dropdown",
-                    options=[{'label': str(i), 'value': i} for i in range(1, 9)],  # Generations 1 to 8
+                    options=[{'label': str(i), 'value': i} for i in range(1, 8)],  # Generations 1 to 
                     multi=True,
                     placeholder="Select Generation(s)",
+                    value=[1, 3, 5],
                     style={'width': '100%'}
                 ),
             ], style={'width': '100%', 'margin-bottom': '20px'}),
@@ -107,6 +118,7 @@ app.layout = dbc.Container([
                         html.H2("Select Type 1"),
                         dcc.Dropdown(
                             id="type1_dropdown",
+                            className="type-dropdown-style",
                             options=type_options,
                             multi=True,
                             placeholder="Select Type 1",
@@ -119,6 +131,7 @@ app.layout = dbc.Container([
                         html.H2("Select Type 2"),
                         dcc.Dropdown(
                             id="type2_dropdown",
+                            className="type-dropdown-style",
                             options=type_options,
                             multi=True,
                             placeholder="Select Type 2",
@@ -134,7 +147,7 @@ app.layout = dbc.Container([
                 html.Div([
                     html.H2("HP"),
                     dcc.RangeSlider(
-                        id="hp_RangeSlider",
+                        id="hp_range_slider",
                         min=0,
                         max=255,
                         step=1,
@@ -145,18 +158,18 @@ app.layout = dbc.Container([
                     html.Br(),                    
                     html.H2("Attack"),
                     dcc.RangeSlider(
-                        id="attack_RangeSlider",
+                        id="attack_range_slider",
                         min=0,
-                        max=190,
+                        max=200,
                         step=1,
-                        value=[0, 190],
-                        marks={0: '0', 190: '190'},
+                        value=[0, 200],
+                        marks={0: '0', 200: '200'},
                         tooltip={"placement": "bottom", "always_visible": True}
                     ),
                     html.Br(),                    
                     html.H2("Defense"),
                     dcc.RangeSlider(
-                        id="defense_RangeSlider",
+                        id="defense_range_slider",
                         min=0,
                         max=250,
                         step=1,
@@ -170,18 +183,18 @@ app.layout = dbc.Container([
                 html.Div([
                     html.H2("Sp. Attack"),
                     dcc.RangeSlider(
-                        id="sp_attack_RangeSlider",
+                        id="sp_attack_range_slider",
                         min=0,
-                        max=190,
+                        max=250,
                         step=1,
-                        value=[0, 190],
-                        marks={0: '0', 190: '190'},
+                        value=[0, 250],
+                        marks={0: '0', 250: '250'},
                         tooltip={"placement": "bottom", "always_visible": True}
                     ),
                     html.Br(),                    
                     html.H2("Sp. Defense"),
                     dcc.RangeSlider(
-                        id="sp_defense_RangeSlider",
+                        id="sp_defense_range_slider",
                         min=0,
                         max=250,
                         step=1,
@@ -192,7 +205,7 @@ app.layout = dbc.Container([
                     html.Br(),
                     html.H2("Speed"),
                     dcc.RangeSlider(
-                        id="speed_RangeSlider",
+                        id="speed_range_slider",
                         min=0,
                         max=200,
                         step=1,
@@ -242,7 +255,7 @@ app.layout = dbc.Container([
 
             # Second Row
             html.Div([
-                html.H2("Top 7 Pokémon by Stats"),
+                html.H2("Comparison with Top 7 Pokémon by Avg Stats"),
                 dvc.Vega(id='top_7_chart', spec={}, style={'width': '100%'})  # Vega chart
             ], style={'padding': '1vh'})
             
@@ -290,12 +303,19 @@ def update_output(input_value):
 
 @callback(
     Output('pokemon_image', 'src'),
+    Output('pokemon_type_1', 'src'),
+    Output('pokemon_type_2', 'src'),
     Input('pokemon_dropdown', 'value')
 )
 def update_image(selected_pokemon_id):
     # Construct the image URL based on the selected Pokemon ID
     image_url = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{selected_pokemon_id}.png"
-    return image_url
+    selected_pokemon = df.loc[df['pokedex_number'] == selected_pokemon_id]
+    selected_pokemon_type_1 = selected_pokemon['type1'].values[0]
+    selected_pokemon_type_2 = selected_pokemon['type2'].values[0] if not pd.isna(selected_pokemon['type2'].values[0]) else None
+    type_1_path = f"/assets/types/{selected_pokemon_type_1}.png"
+    type_2_path = f"/assets/types/{selected_pokemon_type_2}.png" if selected_pokemon_type_2 else None
+    return image_url, type_1_path, type_2_path
 
 
 @callback(
@@ -333,36 +353,100 @@ def create_chart(x_col, y_col, selected_pokemon_id):
     )
     return alt.layer(base, selected_plot).interactive().to_dict()
 
+def filterData(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
+               selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range):
+    
+    # Filter by generation
+    filtered_df = df[df['generation'].isin(selected_generation)].copy()
+    
+    # Filter by types
+    filtered_df = filtered_df[filtered_df['type1'].isin(selected_type_1)]
+    filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
+    
+    # Filter by stat ranges 
+    filtered_df = filtered_df[
+        (filtered_df['hp'] >= selected_hp_range[0]) & (filtered_df['hp'] <= selected_hp_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['attack'] >= selected_attack_range[0]) & (filtered_df['attack'] <= selected_attack_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['speed'] >= selected_speed_range[0]) & (filtered_df['speed'] <= selected_speed_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['sp_defense'] >= selected_sp_defense_range[0]) & (filtered_df['sp_defense'] <= selected_sp_defense_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['sp_attack'] >= selected_sp_attack_range[0]) & (filtered_df['sp_attack'] <= selected_sp_attack_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['defense'] >= selected_defense_range[0]) & (filtered_df['defense'] <= selected_defense_range[1])
+    ]
+    
+    return filtered_df
+
+# Calculate average stats for each Pokémon
+def getTop7(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
+                    selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range):
+    
+    filtered_df = filterData(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
+                             selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
+
+    # Sort by average stats and return top 7
+    top_7 = filtered_df[['name', 'average_stat']].sort_values(by='average_stat', ascending=False).head(7)
+    
+    return top_7
+
 @callback(
     Output("top_7_chart", "spec"),
-    Input("pokemon_dropdown", "value")
+    Input("pokemon_dropdown", "value"),
+    Input("generation_dropdown", "value"),
+    Input("type1_dropdown", "value"),
+    Input("type2_dropdown", "value"),
+    Input("hp_range_slider", "value"),
+    Input("attack_range_slider", "value"),
+    Input("speed_range_slider", "value"),
+    Input("sp_defense_range_slider", "value"),
+    Input("sp_attack_range_slider", "value"),
+    Input("defense_range_slider", "value")
 )
-def create_top7_histogram(selected_pokemon_id):
+def create_top7_histogram(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range, 
+                          selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range,
+                          selected_defense_range):
+    
+    if not selected_generation:
+        selected_generation = list(range(1, 8))
+        
+    if not selected_type_1:
+        selected_type_1 = [option['value'] for option in type_options]
+    
+    if not selected_type_2:
+        selected_type_2 = [option['value'] for option in type_options]
+
+    
     # Filter the selected Pokémon based on the dropdown value
     selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][['name', 'average_stat']]
-    top_7_updated = top_7.copy()  # Create a copy to avoid modifying the original top_7
+    top_7 = getTop7(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
+                    selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
 
     # If the selected Pokémon is not in the top 7, we add it
     if selected_pokemon['name'].values[0] not in top_7['name'].values:
-        top_7_updated = pd.concat([top_7, selected_pokemon]).drop_duplicates(subset='name').nlargest(7, 'average_stat')  
+        top_7 = pd.concat([top_7, selected_pokemon]).drop_duplicates(subset='name').nlargest(7, 'average_stat')  
     else:
-        top_7_updated = top_7  # Keep the original top 7 if already in the list
-    
-    # Sort the Pokémon by 'average_stat' in descending order
-    top_7_updated = top_7_updated.sort_values(by='average_stat', ascending=True)
+        top_7 = top_7  # Keep the original top 7 if already in the list
     
     # Base bar chart for the top 7 Pokémon
-    base_chart = alt.Chart(top_7_updated, width="container").mark_bar().encode(
-        x=alt.X('average_stat', title='Average Stat'),
-        y=alt.Y('name', sort='-x', title='Pokémon'),
+    base_chart = alt.Chart(top_7, width="container", height=400).mark_bar().encode(
+        x=alt.X('average_stat', title='Average Stats'),
+        y=alt.Y('name', title='Pokémon', sort=top_7['name'].tolist()),
         tooltip=['name', 'average_stat'],
-        color=alt.value('steelblue')  # Default color for all bars
+        color=alt.value('steelblue')
     )
 
     # Highlight the selected Pokémon in red
     highlight_chart = alt.Chart(selected_pokemon).mark_bar(color='red').encode(
-        x='average_stat',
-        y='name',
+        x=alt.X('average_stat'),
+        y=alt.Y('name', sort=top_7['name'].tolist()),
         tooltip=['name', 'average_stat']
     )
 

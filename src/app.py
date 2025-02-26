@@ -72,6 +72,15 @@ app.layout = dbc.Container([
         dvc.Vega(id='scatter', spec={}, style={'width': '100%'}),
     ]),
 ])
+options=a.to_dict(orient='records')
+@callback(
+    Output("my-dynamic-dropdown", "options"),
+    Input("my-dynamic-dropdown", "search_value")
+)
+def update_options(search_value):
+    if not search_value:
+        raise PreventUpdate
+    return [o for o in options if search_value in o["label"]]
 
 
 @callback(

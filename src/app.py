@@ -1,3 +1,4 @@
+
 from dash import Dash, dcc, html, Input, Output, callback
 from dash.exceptions import PreventUpdate
 import altair as alt
@@ -15,6 +16,7 @@ a["value"] = df["pokedex_number"]
 
 stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 df['average_stat'] = df[stats_columns].mean(axis=1)
+
 
 scatterplot_options = [
     {"label": "Attack", "value": "attack"},

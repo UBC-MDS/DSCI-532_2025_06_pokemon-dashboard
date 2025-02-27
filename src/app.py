@@ -272,12 +272,24 @@ app.layout = dbc.Container([
             ),
 
             # Second Row
-            html.Div(
-                dcc.Graph(
-                    # figure=fig
+            html.Div([
+                html.H2('Boxplot'),
+                html.Div([
+                html.Label("x-axis label:", style={"marginRight": "10px"}),
+                dcc.Dropdown(
+                    id="x_col",
+                    options=scatterplot_options,
+                    value="speed",
+                    clearable=False,
+                    placeholder="x-axis property",
+                    style={"minWidth": "100px", "flex": "1"},
+                    ),
+                    ],
+                    style={"display": "flex", "alignItems": "center"},
                 ),
-                style={'width': '100%', 'height': '100%', 'padding': '1vh'}
-            )
+            html.Br(),
+            dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
+            ])
         ], width=5)  # Right column width
     ], align="start")
 ], fluid=True, style={"height": "100vh", "padding": "4vh"})
@@ -452,6 +464,34 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
 
     # Combine the base chart with the highlighted selected Pokémon
     return alt.layer(base_chart, highlight_chart).to_dict()
+
+@callback(
+    Output("boxplot", "spec"),
+    Input("x_col", "value"),
+    Input("pokemon_dropdown", "value")
+)
+def create_type_boxplot(x_col, selected_pokemon_id):
+
+    base = alt.Chart(df, width="container").mark_boxplot().encode(
+    x = x_col,   # chosen stat
+    y = "type1",   # Just type1 for now. Can change this to accomodate dropdown of type1 or type2 later
+    color = "type1"  
+    )
+    selected_pokemon = alt.Chart(
+        df.loc[df['pokedex_number'] == selected_pokemon_id],
+        width="container"
+    ).mark_point(
+        color="black",
+        shape="diamond",
+        filled=True,
+        size=200
+    ).encode(
+        x=x_col,
+        y="type1",
+        tooltip="name"          # add mark of chosen pokemon as a point in the appropriate type 
+    )
+    return alt.layer(base, selected_pokemon).interactive().to_dict()
+
 
 
 # Run the app/dashboard

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    overflow: hidden; /* Prevent scrolling */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Texts */
+
+h1 {
+    color: #333333; 
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 16px;
+    color: #333333;
+}
+
+p {
+    color: #333333;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.type-dropdown-style .Select.dcc_control.is-open {
+    max-height: 100%;
+    overflow-y:visible;
+}
+
+.type-dropdown-style .Select.dcc_control {
+    max-height: 20px;
+    overflow-y:auto;
+}

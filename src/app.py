@@ -386,14 +386,15 @@ def filterData(selected_generation, selected_type_1, selected_type_2, selected_h
     return filtered_df
 
 # Calculate average stats for each Pokémon
-def getTop7(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
-                    selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range):
+def getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range, 
+            selected_attack_range, selected_speed_range, selected_sp_defense_range, 
+            selected_sp_attack_range, selected_defense_range):
     
     filtered_df = filterData(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
                              selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
 
     # Sort by average stats and return top 7
-    top_7 = filtered_df[['name', 'average_stat']].sort_values(by='average_stat', ascending=False).head(7)
+    top_7 = filtered_df[attributes].sort_values(by='average_stat', ascending=False).head(7)
     
     return top_7
 
@@ -425,9 +426,10 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
 
     
     # Filter the selected Pokémon based on the dropdown value
-    selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][['name', 'average_stat']]
-    top_7 = getTop7(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range, 
-                    selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
+    attributes = ['name', 'average_stat', 'hp', 'attack', 'defense', 'speed', 'sp_attack', 'sp_defense']
+    selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][attributes]
+    top_7 = getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range, 
+                    selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
 
     # If the selected Pokémon is not in the top 7, we add it
     if selected_pokemon['name'].values[0] not in top_7['name'].values:
@@ -439,7 +441,7 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
     base_chart = alt.Chart(top_7, width="container", height=400).mark_bar().encode(
         x=alt.X('average_stat', title='Average Stats'),
         y=alt.Y('name', title='Pokémon', sort=top_7['name'].tolist()),
-        tooltip=['name', 'average_stat'],
+        tooltip=attributes,
         color=alt.value('steelblue')
     )
 
@@ -447,7 +449,7 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
     highlight_chart = alt.Chart(selected_pokemon).mark_bar(color='red').encode(
         x=alt.X('average_stat'),
         y=alt.Y('name', sort=top_7['name'].tolist()),
-        tooltip=['name', 'average_stat']
+        tooltip=attributes
     )
 
     # Combine the base chart with the highlighted selected Pokémon

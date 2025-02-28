@@ -279,7 +279,7 @@ app.layout = dbc.Container([
                 html.Div([
                 html.Label("x-axis label:", style={"marginRight": "10px"}),
                 dcc.Dropdown(
-                    id="x_col",
+                    id="x_col_boxplot",
                     options=scatterplot_options,
                     value="speed",
                     clearable=False,
@@ -471,7 +471,7 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
 
 @callback(
     Output("boxplot", "spec"),
-    Input("x_col", "value"),
+    Input("x_col_boxplot", "value"),
     Input("pokemon_dropdown", "value")
 )
 def create_type_boxplot(x_col, selected_pokemon_id):

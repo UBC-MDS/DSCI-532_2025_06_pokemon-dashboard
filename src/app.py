@@ -477,9 +477,9 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
 def create_type_boxplot(x_col, selected_pokemon_id):
 
     base = alt.Chart(df, width="container").mark_boxplot().encode(
-    x = x_col,   # chosen stat
-    y = "type1",   # Just type1 for now. Can change this to accomodate dropdown of type1 or type2 later
-    color = "type1"  
+    x = x_col,   # Chosen stat
+    y = "type1",   # Just type1 for now. Can be changed to accomodate dropdown of type1 or type2 later
+    color = alt.Color("type1", legend=None) 
     )
     selected_pokemon = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],
@@ -492,9 +492,11 @@ def create_type_boxplot(x_col, selected_pokemon_id):
     ).encode(
         x=x_col,
         y="type1",
-        tooltip="name"          # add mark of chosen pokemon as a point in the appropriate type 
+        tooltip="name"    # Add mark of chosen pokemon as a point in the appropriate type 
     )
-    return alt.layer(base, selected_pokemon).interactive().to_dict()
+
+    # Return both charts (boxplot, and point of the selected Pokémon) layered together
+    return alt.layer(base, selected_pokemon).to_dict()
 
 
 

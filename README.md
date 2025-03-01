@@ -1,6 +1,7 @@
 # Pokémon Dashboard
 
-![m2-pokedash](https://github.com/user-attachments/assets/a1f73768-cc59-4364-a9af-4861c77c4be4)
+![m2-pokedash](/img/demo.gif)
+
 
 ## 🚀 Motivation
 

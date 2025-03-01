@@ -265,7 +265,7 @@ app.layout = dbc.Container([
         dbc.Col([
             # First Row
             html.Div([
-                html.H2('Type Matchup'),
+                html.H2('Type Disadvantage'),
                 html.Div([
                 dvc.Vega(
                     id="type_matchup",

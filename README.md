@@ -5,8 +5,9 @@
 
 ## 🚀 Motivation
 
-Newcomers to the Pokémon universe often struggle to find Pokémon that match their interests due to the sheer number of options available. Understanding key attributes such as stats, types, abilities, and battle effectiveness is crucial for competitive players, while casual fans may enjoy exploring fun details like height, weight, and generation. This interactive Pokémon Dashboard that allows users to explore Pokémon statistics with ease. Our dashboard visualizes key attributes, enables direct comparisons, and offers filtering and sorting options, making it easier for users to discover and analyze Pokémon in a way that suits their interests.
-Welcome to the Pokémon Dashboard! This interactive web app allows users to explore and compare Pokémon stats with powerful filtering and visualization tools.
+With hundreds of Pokémon to choose from, newcomers often struggle to find ones that match their interests. Competitive players need to analyze stats, types, abilities, and battle effectiveness, while casual fans may simply enjoy exploring fun details like height, weight, and generation.
+
+Enter the Pokémon Dashboard! This interactive web app simplifies Pokémon exploration by offering intuitive visualizations, powerful filtering, and direct comparisons. Whether you're strategizing for battle or just discovering new favorites, our dashboard makes it easy to analyze and explore Pokémon in a way
 
 Try it out here: [Deployed Link](https://dsci-532-2025-06-pokemon-dashboard.onrender.com/)
 

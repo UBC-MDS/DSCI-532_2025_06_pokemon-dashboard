@@ -38,7 +38,9 @@ conda activate 532_pokemon
 
 3. Run the app
 
+```sh
 python src/app.py
+```
 
 The app should now be running at http://127.0.0.1:8050/
 

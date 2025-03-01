@@ -62,6 +62,10 @@ app.layout = dbc.Container([
                 ]),
                 html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
                 html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
+                html.P([
+                    "The GitHub repository can be found ",
+                    html.A("here", href="https://github.com/UBC-MDS/DSCI-532_2025_06_pokemon-dashboard")
+                    ])
             ], style={"textAlign": "left"}),
 
             # Pokemon Dropdown

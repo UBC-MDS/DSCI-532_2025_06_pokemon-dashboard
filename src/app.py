@@ -292,6 +292,7 @@ app.layout = dbc.Container([
                     style={"minWidth": "100px", "flex": "1"},
                     ),
                     ],
+
                     style={"display": "flex", "alignItems": "center", 'height': '100%'},
                 ),
             html.Br(),
@@ -480,7 +481,6 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
     Input("x_col_boxplot", "value"),
     Input("pokemon_dropdown", "value")
 )
-
 def create_type_boxplot(x_col, selected_pokemon_id):
 
     base = alt.Chart(df, width="container").mark_boxplot().encode(
@@ -501,6 +501,7 @@ def create_type_boxplot(x_col, selected_pokemon_id):
         y="type1",
         tooltip="name"    # Add mark of chosen pokemon as a point in the appropriate type 
     )
+
     
 
     # Return both charts (boxplot, and point of the selected Pokémon) layered together
@@ -527,6 +528,7 @@ def create_type_comparison(x_col, selected_pokemon_id):
     tooltip=df.loc[df['pokedex_number']==selected_pokemon_id]['name'].to_list()[-1]
     )
     return alt.layer(base).configure_axis(grid=False).to_dict()
+
 
 # Run the app/dashboard
 if __name__ == "__main__":

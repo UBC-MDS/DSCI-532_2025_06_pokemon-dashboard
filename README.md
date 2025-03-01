@@ -2,6 +2,7 @@
 
 ![m2-pokedash](/img/demo.gif)
 
+
 ## 🚀 Motivation
 
 Newcomers to the Pokémon universe often struggle to find Pokémon that match their interests due to the sheer number of options available. Understanding key attributes such as stats, types, abilities, and battle effectiveness is crucial for competitive players, while casual fans may enjoy exploring fun details like height, weight, and generation. This interactive Pokémon Dashboard that allows users to explore Pokémon statistics with ease. Our dashboard visualizes key attributes, enables direct comparisons, and offers filtering and sorting options, making it easier for users to discover and analyze Pokémon in a way that suits their interests.

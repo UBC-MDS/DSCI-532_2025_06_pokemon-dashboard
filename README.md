@@ -29,6 +29,7 @@ cd DSCI-532_2025_06_pokemon-dashboard
 ```
 
 2. Create and activate a Conda environment
+
 Ensure you have Conda installed, then run:
 ```sh
 conda env create -f environment.yml

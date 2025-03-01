@@ -16,8 +16,6 @@ a["value"] = df["pokedex_number"]
 
 stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 df['average_stat'] = df[stats_columns].mean(axis=1)
-
-
 scatterplot_options = [
     {"label": "Attack", "value": "attack"},
     {"label": "Defense", "value": "defense"},
@@ -292,6 +290,7 @@ app.layout = dbc.Container([
             html.Br(),
             dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
             ])
+
         ], width=5)  # Right column width
     ], align="start")
 ], fluid=True, style={"height": "100vh", "padding": "4vh"})
@@ -497,8 +496,6 @@ def create_type_boxplot(x_col, selected_pokemon_id):
 
     # Return both charts (boxplot, and point of the selected Pokémon) layered together
     return alt.layer(base, selected_pokemon).to_dict()
-
-
 
 # Run the app/dashboard
 if __name__ == "__main__":

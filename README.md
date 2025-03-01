@@ -1,9 +1,13 @@
 # Pokémon Dashboard
 
+![m2-pokedash](https://github.com/user-attachments/assets/a1f73768-cc59-4364-a9af-4861c77c4be4)
+
 ## 🚀 Motivation
 
 Newcomers to the Pokémon universe often struggle to find Pokémon that match their interests due to the sheer number of options available. Understanding key attributes such as stats, types, abilities, and battle effectiveness is crucial for competitive players, while casual fans may enjoy exploring fun details like height, weight, and generation. This interactive Pokémon Dashboard that allows users to explore Pokémon statistics with ease. Our dashboard visualizes key attributes, enables direct comparisons, and offers filtering and sorting options, making it easier for users to discover and analyze Pokémon in a way that suits their interests.
 Welcome to the Pokémon Dashboard! This interactive web app allows users to explore and compare Pokémon stats with powerful filtering and visualization tools.
+
+Try it out here: [Deployed Link](https://dsci-532-2025-06-pokemon-dashboard.onrender.com/)
 
 ## 🌟 Features
 
@@ -14,8 +18,6 @@ Welcome to the Pokémon Dashboard! This interactive web app allows users to expl
 📈 Visualizations: View Pokémon attributes through interactive charts and graphs.
 
 🎯 User-Friendly Interface: Easy-to-use dashboard with a clean design.
-
-Try it out here: Deployed Link
 
 ## 🛠️ Running Locally
 

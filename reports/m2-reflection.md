@@ -18,6 +18,9 @@ We have successfully implemented several key features from our proposal, includi
 - Adjustable Y-Axis for Boxplot: Currently, the boxplot only displays stats grouped by Type1. We plan to allow users to switch between Type1 and Type2 as the y-axis grouping variable.
 - Case-Sensitive Search Issue: The search bar currently differentiates between uppercase and lowercase inputs. For example, searching for "bulbasaur" does not match "Bulbasaur." We plan to make this search case-insensitive.
 - Dropdown multi-select format is still not the best, the auto adjustment ruins the experience of the user because of too many selected items.
+- Automate downloading the dataset from Kaggle, rather than working with a static copy.
+- Axis labels for the type disadvantage chart are not as descriptive as they could be. For example, changing the x-axis to have nominal labels (Immune, 0.25-resisted, 0.5-resisted, neutral, 2-effective, 4-effective) instead of numeric labels.
+- A nice visual feature would be to colour-code plots based on typing. For example, the "top 7 pokemon" boxplot could be coloured by primary type, and the "type disadvantage" and "boxplot" plots could be coloured by type.
 
 ## Deviations from the Proposal
 

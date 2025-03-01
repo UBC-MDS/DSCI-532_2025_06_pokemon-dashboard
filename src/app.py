@@ -499,4 +499,4 @@ def create_type_boxplot(x_col, selected_pokemon_id):
 
 # Run the app/dashboard
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

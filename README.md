@@ -1,11 +1,11 @@
 # Pokémon Dashboard
 
-🚀 Motivation
+## 🚀 Motivation
 
 Newcomers to the Pokémon universe often struggle to find Pokémon that match their interests due to the sheer number of options available. Understanding key attributes such as stats, types, abilities, and battle effectiveness is crucial for competitive players, while casual fans may enjoy exploring fun details like height, weight, and generation. This interactive Pokémon Dashboard that allows users to explore Pokémon statistics with ease. Our dashboard visualizes key attributes, enables direct comparisons, and offers filtering and sorting options, making it easier for users to discover and analyze Pokémon in a way that suits their interests.
 Welcome to the Pokémon Dashboard! This interactive web app allows users to explore and compare Pokémon stats with powerful filtering and visualization tools.
 
-🌟 Features
+## 🌟 Features
 
 📊 Compare Pokémon: Select a Pokémon and compare its stats with others.
 
@@ -17,7 +17,7 @@ Welcome to the Pokémon Dashboard! This interactive web app allows users to expl
 
 Try it out here: Deployed Link
 
-🛠️ Running Locally
+## 🛠️ Running Locally
 
 If you're interested in running this project on your machine or contributing, follow these steps:
 
@@ -44,11 +44,11 @@ python src/app.py
 
 The app should now be running at http://127.0.0.1:8050/
 
-🤝 Contributing
+## 🤝 Contributing
 
 We welcome contributions! If you'd like to help improve the dashboard, check out our [Contributing Guide](https://github.com/UBC-MDS/DSCI-532_2025_06_pokemon-dashboard/blob/main/CONTRIBUTING.md) for more details.
 
-📩 Support
+## 📩 Support
 
 If you run into any issues or have suggestions, feel free to open an issue.
 

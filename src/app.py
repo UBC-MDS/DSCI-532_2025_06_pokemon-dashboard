@@ -1,6 +1,6 @@
-
 from dash import Dash, dcc, html, Input, Output, callback
 from dash.exceptions import PreventUpdate
+from datetime import datetime
 import altair as alt
 import dash_bootstrap_components as dbc
 import dash_vega_components as dvc
@@ -8,6 +8,7 @@ import pandas as pd
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
+deployment_date = datetime.now().strftime('%Y-%m-%d')
 
 df = pd.read_csv("data/raw/pokemon.csv")
 df['generation'] = df['generation'].astype('category')
@@ -216,13 +217,24 @@ app.layout = dbc.Container([
                     ),
                 ], style={'flex': 1, 'marginTop': '1vh'}),  # Right column
             ], style={'display': 'flex', 'marginTop': '1vh'}),  # Flex container for two columns of RangeSliders
+
+            # Footer Notes
+            html.Div([
+                html.Br(),
+                html.P([
+                    "The GitHub repository can be found ",
+                    html.A("here.", href="https://github.com/UBC-MDS/DSCI-532_2025_06_pokemon-dashboard")
+                    ]),
+                html.P(f"Most recent deployment date: {deployment_date}")
+            ], style={"textAlign": "left"}),
+
         ], width=2),  # Left column width
 
         # First Output Column
         dbc.Col([
             # First Row
             html.Div([
-                html.H2('Scatterplot'),
+                html.H2('Scatterplot: Comparing Pokémon Metrics'),
                 html.Div([
                     html.Label("x-axis metric:", style={"marginRight": "10px"}),
                     dcc.Dropdown(
@@ -265,7 +277,7 @@ app.layout = dbc.Container([
         dbc.Col([
             # First Row
             html.Div([
-                html.H2('Type Disadvantage'),
+                html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
                 html.Div([
                     dvc.Vega(
                         id="type_matchup",
@@ -280,7 +292,7 @@ app.layout = dbc.Container([
 
             # Second Row
             html.Div([
-                html.H2('Boxplot'),
+                html.H2('Boxplot: Examining Pokémon Stat Distributions by Type'),
                 html.Div([
                     html.Label("x-axis label:", style={"marginRight": "10px"}),
                     dcc.Dropdown(

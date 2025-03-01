@@ -18,15 +18,16 @@ We have successfully implemented several key features from our proposal, includi
 -	Change from Heatmap to Bar Chart for Type Effectiveness: Initially, we proposed a heatmap to show type effectiveness, but we found that a bar chart is more intuitive and provides clearer comparisons.
 -	More Customization for Boxplot: We improved the boxplot to allow more flexibility in comparing stats, making it more useful for users analyzing Pokémon attributes.
 ## Reflection
-Strengths:
+### Strengths:
 -	The dashboard currently provides a visually appealing and interactive way to explore Pokémon data.
 -	Interactive scatter plots and boxplots enhance usability by allowing custom comparisons.
 -	Filtering options make it easy to narrow down Pokémon based on user preferences.
-Limitations & Future Improvements:
+### Limitations & Future Improvements:
 -	Adding a Pokémon status card would enhance user experience by providing detailed information on a selected Pokémon.
 -	Improving search functionality by making it case-insensitive and potentially adding autocomplete.
 -	Refining visualization options, such as improving boxplot grouping and incorporating additional interactivity.
 -	Potentially reintroducing some removed attributes if we find a streamlined way to display them effectively.
 -	Adjust how the dropdown with multi-select works.
+
 Overall, we are on track with our implementation and have made necessary adjustments based on feasibility and effectiveness. Our focus moving forward will be refining existing features and implementing missing elements to improve usability and clarity.
 

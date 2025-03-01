@@ -7,6 +7,7 @@ import dash_vega_components as dvc
 import pandas as pd
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+server=app.server
 
 df = pd.read_csv("data/raw/pokemon.csv")
 df['generation'] = df['generation'].astype('category')
@@ -533,4 +534,4 @@ def create_type_comparison(x_col, selected_pokemon_id):
 # Run the app/dashboard
 if __name__ == "__main__":
     app.run(debug=False)
-    server=app.server
+    

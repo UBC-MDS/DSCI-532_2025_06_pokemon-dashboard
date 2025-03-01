@@ -7,7 +7,7 @@
 
 With hundreds of Pokémon to choose from, newcomers often struggle to find ones that match their interests. Competitive players need to analyze stats, types, abilities, and battle effectiveness, while casual fans may simply enjoy exploring fun details like height, weight, and generation.
 
-Enter the Pokémon Dashboard! This interactive web app simplifies Pokémon exploration by offering intuitive visualizations, powerful filtering, and direct comparisons. Whether you're strategizing for battle or just discovering new favorites, our dashboard makes it easy to analyze and explore Pokémon in a way
+Enter the Pokémon Dashboard! This interactive web app simplifies Pokémon exploration by offering intuitive visualizations, powerful filtering, and direct comparisons. Whether you're strategizing for battle or just discovering new favorites, our dashboard makes it easy to analyze and explore Pokémon in a way that suits you.
 
 Try it out here: [Deployed Link](https://dsci-532-2025-06-pokemon-dashboard.onrender.com/)
 

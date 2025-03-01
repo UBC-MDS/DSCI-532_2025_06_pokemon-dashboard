@@ -29,23 +29,23 @@ scatterplot_options = [
 ]
 
 type_options = [
-    {'label': 'Normal', 'value': 'normal'}, 
-    {'label': 'Fire', 'value': 'fire'}, 
-    {'label': 'Water', 'value': 'water'}, 
-    {'label': 'Electric', 'value': 'electric'}, 
-    {'label': 'Grass', 'value': 'grass'}, 
-    {'label': 'Ice', 'value': 'ice'}, 
-    {'label': 'Fighting', 'value': 'fighting'}, 
-    {'label': 'Poison', 'value': 'poison'}, 
-    {'label': 'Ground', 'value': 'ground'}, 
-    {'label': 'Flying', 'value': 'flying'}, 
-    {'label': 'Psychic', 'value': 'psychic'}, 
-    {'label': 'Bug', 'value': 'bug'}, 
-    {'label': 'Rock', 'value': 'rock'}, 
-    {'label': 'Ghost', 'value': 'ghost'}, 
-    {'label': 'Dragon', 'value': 'dragon'}, 
-    {'label': 'Dark', 'value': 'dark'}, 
-    {'label': 'Steel', 'value': 'steel'}, 
+    {'label': 'Normal', 'value': 'normal'},
+    {'label': 'Fire', 'value': 'fire'},
+    {'label': 'Water', 'value': 'water'},
+    {'label': 'Electric', 'value': 'electric'},
+    {'label': 'Grass', 'value': 'grass'},
+    {'label': 'Ice', 'value': 'ice'},
+    {'label': 'Fighting', 'value': 'fighting'},
+    {'label': 'Poison', 'value': 'poison'},
+    {'label': 'Ground', 'value': 'ground'},
+    {'label': 'Flying', 'value': 'flying'},
+    {'label': 'Psychic', 'value': 'psychic'},
+    {'label': 'Bug', 'value': 'bug'},
+    {'label': 'Rock', 'value': 'rock'},
+    {'label': 'Ghost', 'value': 'ghost'},
+    {'label': 'Dragon', 'value': 'dragon'},
+    {'label': 'Dark', 'value': 'dark'},
+    {'label': 'Steel', 'value': 'steel'},
     {'label': 'Fairy', 'value': 'fairy'}
 ]
 
@@ -96,20 +96,20 @@ app.layout = dbc.Container([
                     align="center",
                 )
             ),
-            
+
             # Generation Dropdown
             html.Div([
                 html.H2("Select Generation"),
                 dcc.Dropdown(
                     id="generation_dropdown",
-                    options=[{'label': str(i), 'value': i} for i in range(1, 8)],  # Generations 1 to 
+                    options=[{'label': str(i), 'value': i} for i in range(1, 8)],  # Generations 1 to
                     multi=True,
                     placeholder="Select Generation(s)",
                     value=[1, 3, 5],
                     style={'width': '100%'}
                 ),
             ], style={'width': '100%', 'margin-bottom': '20px'}),
-            
+
             # Type Dropdowns
             html.Div([
                 # Container to hold both dropdowns side by side
@@ -139,7 +139,7 @@ app.layout = dbc.Container([
                             style={'width': '100%'}
                         ),
                     ], style={'flex': 1}),
-                ], style={'display': 'flex', 'gap': '20px'}),  
+                ], style={'display': 'flex', 'gap': '20px'}),
             ], style={'width': '100%'}),
 
             # Stats RangeSliders
@@ -156,7 +156,7 @@ app.layout = dbc.Container([
                         marks={0: '0', 255: '255'},
                         tooltip={"placement": "bottom", "always_visible": True}
                     ),
-                    html.Br(),                    
+                    html.Br(),            
                     html.H2("Attack"),
                     dcc.RangeSlider(
                         id="attack_range_slider",
@@ -216,42 +216,41 @@ app.layout = dbc.Container([
                     ),
                 ], style={'flex': 1, 'marginTop': '1vh'}),  # Right column
             ], style={'display': 'flex', 'marginTop': '1vh'}),  # Flex container for two columns of RangeSliders
-               
         ], width=2),  # Left column width
-        
+
         # First Output Column
         dbc.Col([
             # First Row
             html.Div([
                 html.H2('Scatterplot'),
                 html.Div([
-                html.Label("x-axis metric:", style={"marginRight": "10px"}),
-                dcc.Dropdown(
-                    id="x_col",
-                    options=scatterplot_options,
-                    value="speed",
-                    clearable=False,
-                    placeholder="x-axis property",
-                    style={"minWidth": "100px", "flex": "1"},
+                    html.Label("x-axis metric:", style={"marginRight": "10px"}),
+                    dcc.Dropdown(
+                        id="x_col",
+                        options=scatterplot_options,
+                        value="speed",
+                        clearable=False,
+                        placeholder="x-axis property",
+                        style={"minWidth": "100px", "flex": "1"},
                     ),
                     ],
                     style={"display": "flex", "alignItems": "center"},
                 ),
-            html.Div([
-                html.Label("y-axis metric:", style={"marginRight": "10px"}),
-                dcc.Dropdown(
-                    id="y_col",
-                    options=scatterplot_options,
-                    value="attack",
-                    clearable=False,
-                    placeholder="y-axis property",
-                    style={"minWidth": "100px", "flex": "1"},
+                html.Div([
+                    html.Label("y-axis metric:", style={"marginRight": "10px"}),
+                    dcc.Dropdown(
+                        id="y_col",
+                        options=scatterplot_options,
+                        value="attack",
+                        clearable=False,
+                        placeholder="y-axis property",
+                        style={"minWidth": "100px", "flex": "1"},
                     ),
                     ],
                     style={"display": "flex", "alignItems": "center"},
                 ),
-            html.Br(),
-            dvc.Vega(id='scatter', spec={}, style={'width': '100%'}),
+                html.Br(),
+                dvc.Vega(id='scatter', spec={}, style={'width': '100%'}),
             ]),
 
             # Second Row
@@ -259,7 +258,7 @@ app.layout = dbc.Container([
                 html.H2("Comparison with Top 7 Pokémon by Avg Stats"),
                 dvc.Vega(id='top_7_chart', spec={}, style={'width': '100%'})  # Vega chart
             ], style={'padding': '1vh'})
-            
+
         ], width=5),  # Right column width
 
         # Second Output Column
@@ -268,41 +267,41 @@ app.layout = dbc.Container([
             html.Div([
                 html.H2('Type Disadvantage'),
                 html.Div([
-                dvc.Vega(
-                    id="type_matchup",
-                    style={"minWidth": "100px", "flex": "1"},
+                    dvc.Vega(
+                        id="type_matchup",
+                        style={"minWidth": "100px", "flex": "1"},
                     ),
                     ],
                     style={"display": "flex", "alignItems": "center", 'height': '100%'},
                 ),
-            html.Br(),
-            dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
+                html.Br(),
+                dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
             ]),
 
             # Second Row
             html.Div([
                 html.H2('Boxplot'),
                 html.Div([
-                html.Label("x-axis label:", style={"marginRight": "10px"}),
-                dcc.Dropdown(
-                    id="x_col_boxplot",
-                    options=scatterplot_options,
-                    value="speed",
-                    clearable=False,
-                    placeholder="x-axis property",
-                    style={"minWidth": "100px", "flex": "1"},
+                    html.Label("x-axis label:", style={"marginRight": "10px"}),
+                    dcc.Dropdown(
+                        id="x_col_boxplot",
+                        options=scatterplot_options,
+                        value="speed",
+                        clearable=False,
+                        placeholder="x-axis property",
+                        style={"minWidth": "100px", "flex": "1"},
                     ),
                     ],
-
                     style={"display": "flex", "alignItems": "center", 'height': '100%'},
                 ),
-            html.Br(),
-            dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
+                html.Br(),
+                dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
             ])
 
         ], width=5)  # Right column width
     ], align="start")
 ], fluid=True, style={"height": "100vh", "padding": "4vh"})
+
 
 @callback(
     Output("pokemon_dropdown", "options"),
@@ -466,7 +465,7 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
     # Filter the selected Pokémon based on the dropdown value
     attributes = ['name', 'average_stat', 'hp', 'attack', 'defense', 'speed', 'sp_attack', 'sp_defense']
     selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][attributes]
-    top_7 = getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range, 
+    top_7 = getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
                     selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
 
     # If the selected Pokémon is not in the top 7, we add it

@@ -533,3 +533,4 @@ def create_type_comparison(x_col, selected_pokemon_id):
 # Run the app/dashboard
 if __name__ == "__main__":
     app.run(debug=False)
+    server=app.server

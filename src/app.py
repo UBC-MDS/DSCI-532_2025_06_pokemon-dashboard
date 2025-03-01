@@ -222,7 +222,7 @@ app.layout = dbc.Container([
         dbc.Col([
             # First Row
             html.Div([
-                html.H2('Scatterplot'),
+                html.H2('Scatterplot: Comparing Pokémon Metrics'),
                 html.Div([
                     html.Label("x-axis metric:", style={"marginRight": "10px"}),
                     dcc.Dropdown(
@@ -265,7 +265,7 @@ app.layout = dbc.Container([
         dbc.Col([
             # First Row
             html.Div([
-                html.H2('Type Disadvantage'),
+                html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
                 html.Div([
                     dvc.Vega(
                         id="type_matchup",
@@ -280,7 +280,7 @@ app.layout = dbc.Container([
 
             # Second Row
             html.Div([
-                html.H2('Boxplot'),
+                html.H2('Boxplot: Examining Pokémon Stat Distributions by Type'),
                 html.Div([
                     html.Label("x-axis label:", style={"marginRight": "10px"}),
                     dcc.Dropdown(

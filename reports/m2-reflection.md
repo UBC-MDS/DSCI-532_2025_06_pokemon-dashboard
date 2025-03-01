@@ -45,3 +45,11 @@ We have successfully implemented several key features from our proposal, includi
 - Adjust how the dropdown with multi-select works.
 
 Overall, we are on track with our implementation and have made necessary adjustments based on feasibility and effectiveness. Our focus moving forward will be refining existing features and implementing missing elements to improve usability and clarity.
+
+## Implement more of your proposal (Challenging)
+
+- Additional inputs: The basic inputs required for our dashboard are the Pokémon selector dropdown, filters for generation and type, and sliders for filtering stats. The axes of the scatterplot and boxplot could be pre-specified static stats. The input dropdowns for these plots are, allowing users to select what to put on the plot axes, are additional input components we added from our proposal.
+- Additional outputs: We did not create entirely new components from our proposal, but we did make minor cosmetic improvements, such as adding Pokémon sprites under the dropdown, and to the scatterplot and boxplot.
+- These additional inputs and outputs are all connected with callbacks.
+- Additional callback logic we implemented is populating the Pokémon selector dropdown dynamically as the user is typing, which allows the dashboard to render more smoothly.
+- Every additional feature we implemented makes the dashboard more usable and functional, improving the user experience.

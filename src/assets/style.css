@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
-    overflow: auto; /* Prevent scrolling */
+    /* overflow: visible; Prevent scrolling */
     font-family: 'Poppins', sans-serif;
+    background-color: #f2f2f2;
 }
 
 /* Texts */
@@ -23,6 +24,22 @@ p {
     text-align: justify;
 }
 
+.card-chart {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 300ms;
+}
+
+.card-chart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
 .type-dropdown-style .Select.dcc_control.is-open {
     max-height: 100%;
     overflow-y:visible;
@@ -31,4 +48,25 @@ p {
 .type-dropdown-style .Select.dcc_control {
     max-height: 20px;
     overflow-y:auto;
+}
+
+.card-poke {    
+    width: 280px;
+    height: 400px;
+    background: radial-gradient(circle at 50% 0%, var(--card-color, #ffffff) 36%, #ffffff 36%);
+    padding: 20px;
+}
+
+.poke-img {
+    width: 100px;
+    height: 100px;
+    /* padding: 40px 0px 40px 0px; */
+}
+
+.poke-type {
+    margin: 5px auto;
+}
+.poke-name {
+    text-align: center;
+    font-weight: 600;
 }

@@ -58,18 +58,21 @@ app.layout = dbc.Container([
         dbc.Col([
             
             # Welcome Message
-            html.Div([
-                html.H1([
-                    html.Span("Pokédash"),
-                ]),
-            #     html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
-            #     html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
-            html.Div([
-                dcc.Location(id='url', refresh=False),
-                html.Div(id='page-content')
-                ])
-            ], style={"textAlign": "left"}),
+            html.Div(
+                [
+                    html.H1("Pokédash", className="poke-title"),
+                    dcc.Location(id='url', refresh=False),
+                    html.Div(id='page-content', className="page-content"),
+                ],
+                style={
+                    "display": "flex",
+                    "align-items": "center",
+                    "justify-content": "space-between", 
+                    "width": "100%",
+                },
+            ),
 
+            
             # Pokemon Dropdown
             html.Div([
                 html.Div([
@@ -434,17 +437,17 @@ app.layout = dbc.Container([
     ], align="start")
 ], fluid=True, style={"height": "110vh",})
 index_page = html.Div([
-    dcc.Link('Go to About Page', href='/page-1'),
+    dcc.Link('info', href='/page-1'),
     html.Br()
 ])
 
 page_1_layout = html.Div([
-    html.H1('About Page '),
+    html.H1('About Us'),
     html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
     html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
     html.Div(id='page-1-content'),
     html.Br(),
-    dcc.Link('Go back to home', href='/'),
+    dcc.Link('Close', href='/'),
 ])
 
 # Update the index

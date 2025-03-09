@@ -462,22 +462,24 @@ def update_options(search_value):
     return [o for o in options if search_value.capitalize() in o["label"]]
 
 type_color = {
-    "bug": "#26de81",
-    "dragon": "#ffeaa7",
-    "electric": "#fed330",
-    "fairy": "#FF0069",
-    "fighting": "#30336b",
-    "fire": "#f0932b",
-    "flying": "#81ecec",
-    "grass": "#00b894",
-    "ground": "#EFB549",
-    "ghost": "#a55eea",
-    "ice": "#74b9ff",
-    "normal": "#95afc0",
-    "poison": "#6c5ce7",
-    "psychic": "#a29bfe",
-    "rock": "#2d3436",
-    "water": "#0190FF",
+    "bug": "#A6B91A",
+    "dragon": "#6F35FC",
+    "electric": "#F7D02C",
+    "fairy": "#D685AD",
+    "fight": "#C22E28",
+    "fire": "#EE8130",
+    "flying": "#A98FF3",
+    "grass": "#7AC74C",
+    "ground": "#E2BF65",
+    "ghost": "#735797",
+    "ice": "#96D9D6",
+    "normal": "#A8A77A",
+    "poison": "#A33EA1",
+    "psychic": "#F95587",
+    "rock": "#B6A136",
+    "water": "#6390F0",
+    "dark": "#705746",
+    "steel": "#B7B7CE"
 }
 
 @callback(
@@ -674,7 +676,11 @@ def create_type_boxplot(x_col, selected_pokemon_id):
     base = alt.Chart(df, width="container").mark_boxplot().encode(
         x=x_col,   # Chosen stat
         y="type1",   # Just type1 for now. Can be changed to accomodate dropdown of type1 or type2 later
-        color=alt.Color("type1", legend=None)
+        color=alt.Color(
+            "type1:N",  # Categorical color encoding for types
+            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Map to custom colors
+            legend=None  # Optional: Hide the legend if not needed
+            )
     )
     selected_pokemon = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],
@@ -713,14 +719,36 @@ def create_type_comparison(x_col, selected_pokemon_id):
     """
     Creates a bar chart comparing type matchups for the selected Pokémon.
     """
-    base = alt.Chart(df2.reset_index()).mark_bar().encode(
+
+    # Remove 'against_' from each row so the y-axis looks cleaner
+    df2.index = [col.split('_')[-1] for col in df2.index]  
+
+    # Base Plot
+    base = alt.Chart(df2.reset_index(), width="container").mark_bar().encode(
         x=alt.X(
             df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1],
-            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4])),
-        y="index",
+            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4],
+                          title = "Strength Against You",
+                          labelExpr="{'0': 'Immune', '0.5': '1/2x', '1': 'Neutral', '1.5': '1.5x', '2': '2x'}[datum.value]"  # Make strength labels clearer
+                          )
+                ),
+        y=alt.Y(
+            "index", 
+            title = "Opponent Pokémon Type"
+            ),
+            color=alt.Color(
+            "index:N",  # Using the type (index) for the color encoding
+            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Mapping to custom colors in type_color dict
+            legend=None 
+        ),
         tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]
     )
-    return alt.layer(base).configure_axis(grid=False).to_dict()
+
+    # Add plot title
+    plot = alt.layer(base).configure_axis(grid=False).properties(
+        title = "Pokémon Type Strength Against You"
+    )
+    return plot.to_dict()
 
 # Run the app/dashboard
 if __name__ == "__main__":

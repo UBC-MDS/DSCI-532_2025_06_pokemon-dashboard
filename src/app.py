@@ -61,17 +61,14 @@ app.layout = dbc.Container([
             html.Div(
                 [
                     html.H1("Pokédash", className="poke-title"),
+                ],
+            ),
+            
+            html.Div([
                     dcc.Location(id='url', refresh=False),
                     html.Div(id='page-content', className="page-content"),
-                ],
-                style={
-                    "display": "flex",
-                    "align-items": "center",
-                    "justify-content": "space-between", 
-                    "width": "100%",
-                },
+                ]
             ),
-
             
             # Pokemon Dropdown
             html.Div([
@@ -128,33 +125,30 @@ app.layout = dbc.Container([
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_attack'),
-                                                        html.P('Attack')
+                                                        html.H3(id='pokemon_attack'),
+                                                        html.P('ATK')
                                                     ]
-                                                ),
-                                                md=4,
+                                                )
                                             ),
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_defense'),
-                                                        html.P('Defense')
+                                                        html.H3(id='pokemon_defense'),
+                                                        html.P('DEF')
                                                     ]
-                                                ),
-                                                md=4,
+                                                )
                                             ),
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_speed'),
-                                                        html.P('Speed')
+                                                        html.H3(id='pokemon_speed'),
+                                                        html.P('SPD')
                                                     ]
-                                                ),
-                                                md=4,
+                                                )
                                             ),
                                         ],
-                                        justify="center", align="center", className="g-2",
-                                        style={'padding': '20px 0px 0px 0px'}
+                                        justify="center", align="center",
+                                        style={'padding': '6px 0px 0px 0px'}
                                     )
                                 ),
 
@@ -165,33 +159,30 @@ app.layout = dbc.Container([
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_satk'),
-                                                        html.P('Special Attack')
+                                                        html.H3(id='pokemon_satk'),
+                                                        html.P('Sp. ATK')
                                                     ]
-                                                ),
-                                                md=4,
+                                                )
                                             ),
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_sdef'),
-                                                        html.P('Special Defense')
+                                                        html.H3(id='pokemon_sdef'),
+                                                        html.P('Sp. DEF')
                                                     ]
                                                 ),
-                                                md=4,
                                             ),
                                             dbc.Col(
                                                 html.Div(
                                                     [
-                                                        html.H2(id='pokemon_hp'),
+                                                        html.H3(id='pokemon_hp'),
                                                         html.P('HP')
                                                     ]
                                                 ),
-                                                md=4,
                                             ),
                                         ],
-                                        justify="center", align="center", className="g-2",
-                                        style={'padding': '20px 0px 0px 0px'}
+                                        justify="center", align="center",
+                                        style={'padding': '6px 0px 0px 0px'}
                                     )
                                 ),
                                 

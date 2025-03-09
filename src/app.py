@@ -379,28 +379,6 @@ app.layout = dbc.Container([
                 dbc.Card(
                     dbc.CardBody(
                         [
-                            html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
-                            html.Div([
-                                dvc.Vega(
-                                    id="type_matchup",
-                                    style={'width': '100%'},
-                                ),
-                                ],
-                                style={"display": "flex", "alignItems": "center", 'height': '100%'},
-                            ),
-                            html.Br(),
-                            dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
-                        ]
-                    ),
-                    className="card-chart",
-                ),
-            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
-
-            # Second Row
-            html.Div([
-                dbc.Card(
-                    dbc.CardBody(
-                        [
                             html.H2('Boxplot: Examining Pokémon Stat Distributions by Type'),
                             html.Div([
                                 html.Label("x-axis label:", style={"marginRight": "10px"}),
@@ -417,6 +395,28 @@ app.layout = dbc.Container([
                             ),
                             html.Br(),
                             dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
+                        ]
+                    ),
+                    className="card-chart",
+                ),
+            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
+
+            # Second Row
+            html.Div([
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
+                            html.Div([
+                                dvc.Vega(
+                                    id="type_matchup",
+                                    style={'width': '100%'},
+                                ),
+                                ],
+                                style={"display": "flex", "alignItems": "center", 'height': '100%'},
+                            ),
+                            html.Br(),
+                            dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
                         ]
                     ),
                     className="card-chart",

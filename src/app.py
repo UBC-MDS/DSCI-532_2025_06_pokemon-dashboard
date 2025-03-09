@@ -437,7 +437,7 @@ app.layout = dbc.Container([
     ], align="start")
 ], fluid=True, style={"height": "110vh",})
 index_page = html.Div([
-    dcc.Link('info', href='/page-1'),
+    dcc.Link('about', href='/page-1'),
     html.Br()
 ])
 

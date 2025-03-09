@@ -462,22 +462,24 @@ def update_options(search_value):
     return [o for o in options if search_value.capitalize() in o["label"]]
 
 type_color = {
-    "bug": "#26de81",
-    "dragon": "#ffeaa7",
-    "electric": "#fed330",
-    "fairy": "#FF0069",
-    "fighting": "#30336b",
-    "fire": "#f0932b",
-    "flying": "#81ecec",
-    "grass": "#00b894",
-    "ground": "#EFB549",
-    "ghost": "#a55eea",
-    "ice": "#74b9ff",
-    "normal": "#95afc0",
-    "poison": "#6c5ce7",
-    "psychic": "#a29bfe",
-    "rock": "#2d3436",
-    "water": "#0190FF",
+    "bug": "#A6B91A",
+    "dragon": "#6F35FC",
+    "electric": "#F7D02C",
+    "fairy": "#D685AD",
+    "fight": "#C22E28",
+    "fire": "#EE8130",
+    "flying": "#A98FF3",
+    "grass": "#7AC74C",
+    "ground": "#E2BF65",
+    "ghost": "#735797",
+    "ice": "#96D9D6",
+    "normal": "#A8A77A",
+    "poison": "#A33EA1",
+    "psychic": "#F95587",
+    "rock": "#B6A136",
+    "water": "#6390F0",
+    "dark": "#705746",
+    "steel": "#B7B7CE"
 }
 
 @callback(
@@ -730,6 +732,11 @@ def create_type_comparison(x_col, selected_pokemon_id):
             "index", 
             title = "Opponent Pokémon Type"
             ),
+            color=alt.Color(
+            "index:N",  # Using the type (index) for the color encoding
+            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Mapping to custom colors in type_color dict
+            legend=None 
+        ),
         tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]
     )
 

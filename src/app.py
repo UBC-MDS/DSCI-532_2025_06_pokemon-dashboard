@@ -722,7 +722,6 @@ def create_type_comparison(x_col, selected_pokemon_id):
     )
     return alt.layer(base).configure_axis(grid=False).to_dict()
 
-
 # Run the app/dashboard
 if __name__ == "__main__":
     app.run(debug=True)

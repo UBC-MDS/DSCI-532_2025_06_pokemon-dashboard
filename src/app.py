@@ -15,6 +15,7 @@ df['generation'] = df['generation'].astype('category')
 a = df[["name"]]
 a = a.rename(columns={"name": "label"})
 a["value"] = df["pokedex_number"]
+a["search"] =df['name'].str.lower()
 
 stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 df['average_stat'] = df[stats_columns].mean(axis=1)
@@ -63,6 +64,10 @@ app.layout = dbc.Container([
                 ]),
             #     html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
             #     html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
+            html.Div([
+                dcc.Location(id='url', refresh=False),
+                html.Div(id='page-content')
+                ])
             ], style={"textAlign": "left"}),
 
             # Pokemon Dropdown
@@ -420,7 +425,28 @@ app.layout = dbc.Container([
         ], width=5)  # Right column width
     ], align="start")
 ], fluid=True, style={"height": "110vh",})
+index_page = html.Div([
+    dcc.Link('Go to About Page', href='/page-1'),
+    html.Br()
+])
 
+page_1_layout = html.Div([
+    html.H1('About Page '),
+    html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
+    html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
+    html.Div(id='page-1-content'),
+    html.Br(),
+    dcc.Link('Go back to home', href='/'),
+])
+
+# Update the index
+@callback(Output('page-content', 'children'), Input('url', 'pathname'))
+def display_page(pathname):
+    if pathname == '/page-1':
+        return page_1_layout
+    else:
+        return index_page
+    # You could also return a 404 "URL not found" page here
 
 @callback(
     Output("pokemon_dropdown", "options"),
@@ -431,9 +457,9 @@ def update_options(search_value):
     Dynamically updates the options for the Pokemon dropdown based on the search value entered.
     """
     options = a.to_dict(orient="records")
-    if not search_value:
+    if not search_value.capitalize():
         raise PreventUpdate
-    return [o for o in options if search_value in o["label"]]
+    return [o for o in options if search_value.capitalize() in o["label"]]
 
 type_color = {
     "bug": "#26de81",
@@ -663,30 +689,36 @@ def create_type_boxplot(x_col, selected_pokemon_id):
         tooltip="name"    # Add mark of chosen pokemon as a point in the appropriate type
     )
 
-    
-
     # Return both charts (boxplot, and point of the selected Pokémon) layered together
     return alt.layer(base, selected_pokemon).to_dict()
-#Create dataframe containing type matchup
-df2=df[['against_bug', 'against_dark', 'against_dragon',
-       'against_electric', 'against_fairy', 'against_fight', 'against_fire',
-       'against_flying', 'against_ghost', 'against_grass', 'against_ground',
-       'against_ice', 'against_normal', 'against_poison', 'against_psychic',
-       'against_rock', 'against_steel', 'against_water','name']]
-#Flip the rows and columns to obtain each pokemon as an iterable 
-df2=df2.set_index("name").transpose()
+
+
+# Create dataframe containing type matchup
+df2 = df[['against_bug', 'against_dark', 'against_dragon',
+          'against_electric', 'against_fairy', 'against_fight', 'against_fire',
+          'against_flying', 'against_ghost', 'against_grass', 'against_ground',
+          'against_ice', 'against_normal', 'against_poison', 'against_psychic',
+          'against_rock', 'against_steel', 'against_water', 'name']]
+
+# Flip the rows and columns to obtain each pokemon as an iterable
+df2 = df2.set_index("name").transpose()
+
+
 @callback(
     Output("vstype", "spec"),
-    Input("type_matchup", "value"),
+    Input("type_matchup", "spec"),
     Input("pokemon_dropdown", "value")
 )
 def create_type_comparison(x_col, selected_pokemon_id):
-
+    """
+    Creates a bar chart comparing type matchups for the selected Pokémon.
+    """
     base = alt.Chart(df2.reset_index()).mark_bar().encode(
-    x = alt.X(df.loc[df['pokedex_number']==selected_pokemon_id]['name'].to_list()[-1],
-              axis=alt.Axis(values=[0,0.5,1,1.5,2,4])), 
-    y = "index",  
-    tooltip=df.loc[df['pokedex_number']==selected_pokemon_id]['name'].to_list()[-1]
+        x=alt.X(
+            df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1],
+            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4])),
+        y="index",
+        tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]
     )
     return alt.layer(base).configure_axis(grid=False).to_dict()
 
@@ -724,5 +756,4 @@ def create_type_comparison(x_col, selected_pokemon_id):
 
 # Run the app/dashboard
 if __name__ == "__main__":
-    app.run(debug=False)
-    server=app.server
+    app.run(debug=True)

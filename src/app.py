@@ -676,7 +676,11 @@ def create_type_boxplot(x_col, selected_pokemon_id):
     base = alt.Chart(df, width="container").mark_boxplot().encode(
         x=x_col,   # Chosen stat
         y="type1",   # Just type1 for now. Can be changed to accomodate dropdown of type1 or type2 later
-        color=alt.Color("type1", legend=None)
+        color=alt.Color(
+            "type1:N",  # Categorical color encoding for types
+            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Map to custom colors
+            legend=None  # Optional: Hide the legend if not needed
+            )
     )
     selected_pokemon = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],

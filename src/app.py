@@ -425,7 +425,6 @@ app.layout = dbc.Container([
         ], width=5)  # Right column width
     ], align="start")
 ], fluid=True, style={"height": "110vh",})
-
 index_page = html.Div([
     dcc.Link('Go to About Page', href='/page-1'),
     html.Br()
@@ -692,6 +691,37 @@ def create_type_boxplot(x_col, selected_pokemon_id):
 
     # Return both charts (boxplot, and point of the selected Pokémon) layered together
     return alt.layer(base, selected_pokemon).to_dict()
+
+
+# Create dataframe containing type matchup
+df2 = df[['against_bug', 'against_dark', 'against_dragon',
+          'against_electric', 'against_fairy', 'against_fight', 'against_fire',
+          'against_flying', 'against_ghost', 'against_grass', 'against_ground',
+          'against_ice', 'against_normal', 'against_poison', 'against_psychic',
+          'against_rock', 'against_steel', 'against_water', 'name']]
+
+# Flip the rows and columns to obtain each pokemon as an iterable
+df2 = df2.set_index("name").transpose()
+
+
+@callback(
+    Output("vstype", "spec"),
+    Input("type_matchup", "spec"),
+    Input("pokemon_dropdown", "value")
+)
+def create_type_comparison(x_col, selected_pokemon_id):
+    """
+    Creates a bar chart comparing type matchups for the selected Pokémon.
+    """
+    base = alt.Chart(df2.reset_index()).mark_bar().encode(
+        x=alt.X(
+            df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1],
+            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4])),
+        y="index",
+        tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]
+    )
+    return alt.layer(base).configure_axis(grid=False).to_dict()
+
 
 
 # Create dataframe containing type matchup

@@ -2,7 +2,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 import dash_vega_components as dvc
 
-from data import (
+from .data import (
     type_options,
     scatterplot_options
 )

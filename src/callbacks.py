@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 import altair as alt
 
-from data import (
+from .data import (
     df,
     type_colour,
     pkmn_labels,

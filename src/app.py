@@ -1,7 +1,7 @@
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 
-from callbacks import (
+from .callbacks import (
     display_about,
     update_pkmn_select_options,
     update_pkmn_card,
@@ -11,7 +11,7 @@ from callbacks import (
     create_type_comparison
 )
 
-from components import (
+from .components import (
     pkmn_dropdown,
     pkmn_card,
     generation_dropdown,

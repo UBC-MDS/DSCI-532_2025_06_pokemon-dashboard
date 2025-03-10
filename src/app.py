@@ -47,7 +47,7 @@ app.layout = dbc.Container([
             # About Page
             html.Div([
                 dcc.Location(id='url', refresh=False),
-                html.Div(id='page-content')
+                html.Div(id='about-page-content')
                 ])
             ], style={"textAlign": "left"}),
 

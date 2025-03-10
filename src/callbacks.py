@@ -4,33 +4,14 @@ from datetime import datetime
 import pandas as pd
 import altair as alt
 
-### DATA IMPORT AND PROCESSING ###
-df = pd.read_csv("data/raw/pokemon.csv")
-df['generation'] = df['generation'].astype('category')
-stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
-df['average_stat'] = df[stats_columns].mean(axis=1)
-
-### GLOBAL VARS ###
-type_color = {
-    "bug": "#A6B91A",
-    "dragon": "#6F35FC",
-    "electric": "#F7D02C",
-    "fairy": "#D685AD",
-    "fight": "#C22E28",
-    "fire": "#EE8130",
-    "flying": "#A98FF3",
-    "grass": "#7AC74C",
-    "ground": "#E2BF65",
-    "ghost": "#735797",
-    "ice": "#96D9D6",
-    "normal": "#A8A77A",
-    "poison": "#A33EA1",
-    "psychic": "#F95587",
-    "rock": "#B6A136",
-    "water": "#6390F0",
-    "dark": "#705746",
-    "steel": "#B7B7CE"
-}
+from data import (
+    df,
+    type_colour,
+    pkmn_labels,
+    type_options,
+    type_effectiveness,
+    get_top_7
+)
 
 ### ABOUT PAGE ###
 deployment_date = datetime.now().strftime('%Y-%m-%d')
@@ -49,7 +30,7 @@ page_1_layout = html.Div([
 ])
 
 @callback(
-        Output('page-content', 'children'),
+        Output('about-page-content', 'children'),
         Input('url', 'pathname')
 )
 def display_about(pathname):
@@ -65,10 +46,6 @@ def display_about(pathname):
 
 
 ### POKEMON DROPDOWN ###
-pkmn_labels = df[["name", "pokedex_number"]]
-pkmn_labels = pkmn_labels.rename(columns={"name": "label", "pokedex_number": "value"})
-pkmn_labels["search"] = pkmn_labels["label"].str.lower()
-
 @callback(
     Output("pokemon_dropdown", "options"),
     Input("pokemon_dropdown", "search_value"),
@@ -115,7 +92,7 @@ def update_pkmn_card(selected_pokemon_id):
     pokemon_sdef = selected_pokemon['sp_defense']
     pokemon_hp = selected_pokemon['hp']
     pokemon_name = selected_pokemon['name']
-    pokemon_color = type_color.get(selected_pokemon_type_1.lower(), "#ffffff")
+    pokemon_color = type_colour.get(selected_pokemon_type_1.lower(), "#ffffff")
     card_style = {"--card-color": pokemon_color}
     
     return image_url, type_1_path, type_2_path, pokemon_attack, pokemon_defense, pokemon_speed, pokemon_satk, pokemon_sdef, pokemon_hp, pokemon_name, card_style
@@ -161,75 +138,8 @@ def create_stats_scatter(x_col, y_col, selected_pokemon_id):
     )
     return alt.layer(base, selected_plot).interactive().to_dict()
 
+
 ### TOP 7 POKEMON BAR CHART ###
-type_options = [
-    {'label': 'Normal', 'value': 'normal'},
-    {'label': 'Fire', 'value': 'fire'},
-    {'label': 'Water', 'value': 'water'},
-    {'label': 'Electric', 'value': 'electric'},
-    {'label': 'Grass', 'value': 'grass'},
-    {'label': 'Ice', 'value': 'ice'},
-    {'label': 'Fighting', 'value': 'fighting'},
-    {'label': 'Poison', 'value': 'poison'},
-    {'label': 'Ground', 'value': 'ground'},
-    {'label': 'Flying', 'value': 'flying'},
-    {'label': 'Psychic', 'value': 'psychic'},
-    {'label': 'Bug', 'value': 'bug'},
-    {'label': 'Rock', 'value': 'rock'},
-    {'label': 'Ghost', 'value': 'ghost'},
-    {'label': 'Dragon', 'value': 'dragon'},
-    {'label': 'Dark', 'value': 'dark'},
-    {'label': 'Steel', 'value': 'steel'},
-    {'label': 'Fairy', 'value': 'fairy'}
-]
-
-def filterData(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range,
-               selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range):
-    """
-    Filters the Pokémon dataset based on the selected criteria for generation, types, and stat ranges.
-    """
-    # Filter by generation
-    filtered_df = df[df['generation'].isin(selected_generation)].copy()
-
-    # Filter by types
-    filtered_df = filtered_df[filtered_df['type1'].isin(selected_type_1)]
-    filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
-
-    # Filter by stat ranges
-    filtered_df = filtered_df[
-        (filtered_df['hp'] >= selected_hp_range[0]) & (filtered_df['hp'] <= selected_hp_range[1])
-    ]
-    filtered_df = filtered_df[
-        (filtered_df['attack'] >= selected_attack_range[0]) & (filtered_df['attack'] <= selected_attack_range[1])
-    ]
-    filtered_df = filtered_df[
-        (filtered_df['speed'] >= selected_speed_range[0]) & (filtered_df['speed'] <= selected_speed_range[1])
-    ]
-    filtered_df = filtered_df[
-        (filtered_df['sp_defense'] >= selected_sp_defense_range[0]) & (filtered_df['sp_defense'] <= selected_sp_defense_range[1])
-    ]
-    filtered_df = filtered_df[
-        (filtered_df['sp_attack'] >= selected_sp_attack_range[0]) & (filtered_df['sp_attack'] <= selected_sp_attack_range[1])
-    ]
-    filtered_df = filtered_df[
-        (filtered_df['defense'] >= selected_defense_range[0]) & (filtered_df['defense'] <= selected_defense_range[1])
-    ]
-    return filtered_df
-
-def getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
-            selected_attack_range, selected_speed_range, selected_sp_defense_range,
-            selected_sp_attack_range, selected_defense_range):
-    """
-    Calculate average stats for each Pokémon.
-    """
-    filtered_df = filterData(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range,
-                             selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
-
-    # Sort by average stats and return top 7
-    top_7 = filtered_df[attributes].sort_values(by='average_stat', ascending=False).head(7)
-
-    return top_7
-
 @callback(
     Output("top_7_chart", "spec"),
     Input("pokemon_dropdown", "value"),
@@ -262,7 +172,7 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
     # Filter the selected Pokémon based on the dropdown value
     attributes = ['name', 'average_stat', 'hp', 'attack', 'defense', 'speed', 'sp_attack', 'sp_defense']
     selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][attributes]
-    top_7 = getTop7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
+    top_7 = get_top_7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
                     selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
 
     # If the selected Pokémon is not in the top 7, we add it
@@ -305,7 +215,7 @@ def create_type_boxplot(x_col, selected_pokemon_id):
         y="type1",   # Just type1 for now. Can be changed to accomodate dropdown of type1 or type2 later
         color=alt.Color(
             "type1:N",  # Categorical color encoding for types
-            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Map to custom colors
+            scale=alt.Scale(domain=list(type_colour.keys()), range=list(type_colour.values())),  # Map to custom colors
             legend=None  # Optional: Hide the legend if not needed
             )
     ).properties(
@@ -329,16 +239,6 @@ def create_type_boxplot(x_col, selected_pokemon_id):
 
 
 ### TYPE ADVANTAGES BAR CHART ###
-# Create dataframe containing type matchup
-type_effectiveness = df[['against_bug', 'against_dark', 'against_dragon',
-                         'against_electric', 'against_fairy', 'against_fight', 'against_fire',
-                         'against_flying', 'against_ghost', 'against_grass', 'against_ground',
-                         'against_ice', 'against_normal', 'against_poison', 'against_psychic',
-                         'against_rock', 'against_steel', 'against_water', 'name']]
-
-# Flip the rows and columns to obtain each pokemon as an iterable
-type_effectiveness = type_effectiveness.set_index("name").transpose()
-
 @callback(
     Output("vstype", "spec"),
     Input("type_matchup", "spec"),
@@ -355,9 +255,15 @@ def create_type_comparison(x_col, selected_pokemon_id):
     base = alt.Chart(type_effectiveness.reset_index(), width="container").mark_bar().encode(
         x=alt.X(
             df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1],
-            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4],
+            axis=alt.Axis(values=[0, 0.25, 0.5, 1, 2, 4],
                           title = "Strength Against You",
-                          labelExpr="{'0': 'Immune', '0.5': '1/2x', '1': 'Neutral', '1.5': '1.5x', '2': '2x'}[datum.value]"  # Make strength labels clearer
+                          labelExpr="""{'0': 'Immune',
+                                        '0.25': '1/4x',
+                                        '0.5': '1/2x',
+                                        '1': 'Neutral', 
+                                        '2': '2x',
+                                        '4': '4x'}[datum.value]
+                                        """  # Make strength labels clearer
                           )
                 ),
         y=alt.Y(
@@ -366,7 +272,7 @@ def create_type_comparison(x_col, selected_pokemon_id):
             ),
             color=alt.Color(
             "index:N",  # Using the type (index) for the color encoding
-            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Mapping to custom colors in type_color dict
+            scale=alt.Scale(domain=list(type_colour.keys()), range=list(type_colour.values())),  # Mapping to custom colors in type_colour dict
             legend=None 
         ),
         tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]

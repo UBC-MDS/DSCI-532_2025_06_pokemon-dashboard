@@ -2,37 +2,10 @@ from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 import dash_vega_components as dvc
 
-### DATA ###
-type_options = [
-    {'label': 'Normal', 'value': 'normal'},
-    {'label': 'Fire', 'value': 'fire'},
-    {'label': 'Water', 'value': 'water'},
-    {'label': 'Electric', 'value': 'electric'},
-    {'label': 'Grass', 'value': 'grass'},
-    {'label': 'Ice', 'value': 'ice'},
-    {'label': 'Fighting', 'value': 'fighting'},
-    {'label': 'Poison', 'value': 'poison'},
-    {'label': 'Ground', 'value': 'ground'},
-    {'label': 'Flying', 'value': 'flying'},
-    {'label': 'Psychic', 'value': 'psychic'},
-    {'label': 'Bug', 'value': 'bug'},
-    {'label': 'Rock', 'value': 'rock'},
-    {'label': 'Ghost', 'value': 'ghost'},
-    {'label': 'Dragon', 'value': 'dragon'},
-    {'label': 'Dark', 'value': 'dark'},
-    {'label': 'Steel', 'value': 'steel'},
-    {'label': 'Fairy', 'value': 'fairy'}
-]
-scatterplot_options = [
-    {"label": "Attack", "value": "attack"},
-    {"label": "Defense", "value": "defense"},
-    {"label": "Special Attack", "value": "sp_attack"},
-    {"label": "Special Defense", "value": "sp_defense"},
-    {"label": "Speed", "value": "speed"},
-    {"label": "HP", "value": "hp"},
-    {"label": "Height (m)", "value": "height_m"},
-    {"label": "Weight (kg)", "value": "weight_kg"},
-]
+from data import (
+    type_options,
+    scatterplot_options
+)
 
 ### COMPONENTS ###
 pkmn_dropdown = dcc.Dropdown(id="pokemon_dropdown", search_value="Pikachu", value=25, clearable=False)

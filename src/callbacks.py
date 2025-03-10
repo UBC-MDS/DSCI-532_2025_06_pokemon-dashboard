@@ -1,5 +1,6 @@
 from dash import dcc, html, Input, Output, callback
 from dash.exceptions import PreventUpdate
+from datetime import datetime
 import pandas as pd
 import altair as alt
 
@@ -32,6 +33,7 @@ type_color = {
 }
 
 ### ABOUT PAGE ###
+deployment_date = datetime.now().strftime('%Y-%m-%d')
 index_page = html.Div([
     dcc.Link('Go to About Page', href='/page-1'),
     html.Br()

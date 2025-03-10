@@ -539,6 +539,8 @@ def create_chart(x_col, y_col, selected_pokemon_id):
         tooltip="name",
         color=alt.condition(brush, 'generation', alt.value('lightgray')),
         opacity=alt.condition(click, alt.value(0.9), alt.value(0.2))
+    ).properties(
+        height=400
     ).add_params(brush, click)
 
     selected_plot = alt.Chart(
@@ -681,6 +683,8 @@ def create_type_boxplot(x_col, selected_pokemon_id):
             scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Map to custom colors
             legend=None  # Optional: Hide the legend if not needed
             )
+    ).properties(
+        height=400
     )
     selected_pokemon = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],

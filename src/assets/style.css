@@ -18,9 +18,14 @@ h2 {
     color: #333333;
 }
 
+h3 {
+    font-size: 14px;
+    color: #333333;
+}
+
 p {
     color: #333333;
-    font-size: 14px;
+    font-size: 10px;
     text-align: justify;
 }
 
@@ -51,7 +56,7 @@ p {
 }
 
 .card-poke {    
-    width: 280px;
+    width: 210px;
     height: 400px;
     background: radial-gradient(circle at 50% 0%, var(--card-color, #ffffff) 36%, #ffffff 36%);
     padding: 20px;
@@ -64,7 +69,7 @@ p {
 }
 
 .poke-type {
-    margin: 5px auto;
+    margin: 8px auto;
 }
 .poke-name {
     text-align: center;

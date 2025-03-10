@@ -379,28 +379,6 @@ app.layout = dbc.Container([
                 dbc.Card(
                     dbc.CardBody(
                         [
-                            html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
-                            html.Div([
-                                dvc.Vega(
-                                    id="type_matchup",
-                                    style={'width': '100%'},
-                                ),
-                                ],
-                                style={"display": "flex", "alignItems": "center", 'height': '100%'},
-                            ),
-                            html.Br(),
-                            dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
-                        ]
-                    ),
-                    className="card-chart",
-                ),
-            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
-
-            # Second Row
-            html.Div([
-                dbc.Card(
-                    dbc.CardBody(
-                        [
                             html.H2('Boxplot: Examining Pokémon Stat Distributions by Type'),
                             html.Div([
                                 html.Label("x-axis label:", style={"marginRight": "10px"}),
@@ -417,6 +395,28 @@ app.layout = dbc.Container([
                             ),
                             html.Br(),
                             dvc.Vega(id='boxplot', spec={}, style={'width': '100%'}),
+                        ]
+                    ),
+                    className="card-chart",
+                ),
+            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
+
+            # Second Row
+            html.Div([
+                dbc.Card(
+                    dbc.CardBody(
+                        [
+                            html.H2('Type Disadvantage: Examining Pokémon Weaknesses'),
+                            html.Div([
+                                dvc.Vega(
+                                    id="type_matchup",
+                                    style={'width': '100%'},
+                                ),
+                                ],
+                                style={"display": "flex", "alignItems": "center", 'height': '100%'},
+                            ),
+                            html.Br(),
+                            dvc.Vega(id='vstype', spec={}, style={'width': '100%'}),
                         ]
                     ),
                     className="card-chart",
@@ -539,6 +539,8 @@ def create_chart(x_col, y_col, selected_pokemon_id):
         tooltip="name",
         color=alt.condition(brush, 'generation', alt.value('lightgray')),
         opacity=alt.condition(click, alt.value(0.9), alt.value(0.2))
+    ).properties(
+        height=400
     ).add_params(brush, click)
 
     selected_plot = alt.Chart(
@@ -681,6 +683,8 @@ def create_type_boxplot(x_col, selected_pokemon_id):
             scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Map to custom colors
             legend=None  # Optional: Hide the legend if not needed
             )
+    ).properties(
+        height=400
     )
     selected_pokemon = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],
@@ -721,7 +725,7 @@ def create_type_comparison(x_col, selected_pokemon_id):
     """
 
     # Remove 'against_' from each row so the y-axis looks cleaner
-    df2.index = [col.split('_')[-1] for col in df2.index]  
+    df2.index = [col.split('_')[-1] for col in df2.index]
 
     # Base Plot
     base = alt.Chart(df2.reset_index(), width="container").mark_bar().encode(
@@ -752,4 +756,4 @@ def create_type_comparison(x_col, selected_pokemon_id):
 
 # Run the app/dashboard
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

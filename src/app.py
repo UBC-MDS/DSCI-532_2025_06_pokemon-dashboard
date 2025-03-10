@@ -725,13 +725,7 @@ def create_type_comparison(x_col, selected_pokemon_id):
     """
 
     # Remove 'against_' from each row so the y-axis looks cleaner
-    df2.index = [col.split('_')[-1] for col in df2.index]  
-
-    # Base Plot
-    base = alt.Chart(df2.reset_index(), width="container").mark_bar().encode(
-
-    # Remove 'against_' from each row so the y-axis looks cleaner
-    df2.index = [col.split('_')[-1] for col in df2.index]  
+    df2.index = [col.split('_')[-1] for col in df2.index]
 
     # Base Plot
     base = alt.Chart(df2.reset_index(), width="container").mark_bar().encode(
@@ -751,28 +745,8 @@ def create_type_comparison(x_col, selected_pokemon_id):
             scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Mapping to custom colors in type_color dict
             legend=None 
         ),
-            axis=alt.Axis(values=[0, 0.5, 1, 1.5, 2, 4],
-                          title = "Strength Against You",
-                          labelExpr="{'0': 'Immune', '0.5': '1/2x', '1': 'Neutral', '1.5': '1.5x', '2': '2x'}[datum.value]"  # Make strength labels clearer
-                          )
-                ),
-        y=alt.Y(
-            "index", 
-            title = "Opponent Pokémon Type"
-            ),
-            color=alt.Color(
-            "index:N",  # Using the type (index) for the color encoding
-            scale=alt.Scale(domain=list(type_color.keys()), range=list(type_color.values())),  # Mapping to custom colors in type_color dict
-            legend=None 
-        ),
         tooltip=df.loc[df['pokedex_number'] == selected_pokemon_id]['name'].to_list()[-1]
     )
-
-    # Add plot title
-    plot = alt.layer(base).configure_axis(grid=False).properties(
-        title = "Pokémon Type Strength Against You"
-    )
-    return plot.to_dict()
 
     # Add plot title
     plot = alt.layer(base).configure_axis(grid=False).properties(

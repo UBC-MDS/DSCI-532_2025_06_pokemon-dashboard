@@ -29,6 +29,7 @@
 
 - Changing the width of the browser window can cause some visual issues, such as the selected Pokemon card extending beyond the width of the sidebar
 - The component cards in the dashboard are not aligned
+- Toggling the "About" section can shift the sidebar down, causing the sliders to look bad on some window sizes
 - Certain Pokemon with regional forms (eg. Raticate/Alolan Raticate) have inaccurate representations in the dataset causing the dashboard to display incorrect information
 
 ## Dashboard Strengths

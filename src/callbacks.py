@@ -16,17 +16,16 @@ from .data import (
 ### ABOUT PAGE ###
 deployment_date = datetime.now().strftime('%Y-%m-%d')
 index_page = html.Div([
-    dcc.Link('Go to About Page', href='/page-1'),
+    dcc.Link('About', href='/page-1'),
     html.Br()
 ])
 
 page_1_layout = html.Div([
-    html.H1('About Page '),
+    html.H2('About Pokédash'),
     html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
     html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
     html.Div(id='page-1-content'),
-    html.Br(),
-    dcc.Link('Go back to home', href='/'),
+    dcc.Link('Close', href='/'),
 ])
 
 @callback(

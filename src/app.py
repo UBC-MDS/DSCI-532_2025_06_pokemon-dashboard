@@ -47,7 +47,6 @@ app.layout = dbc.Container([
             html.Div([
                 dcc.Location(id='url', refresh=False),
                 html.Div(id='about-page-content', className="about-page-content"),
-                html.Br(),
                 ]
             ),
 

@@ -16,7 +16,9 @@ pkmn_card = dbc.Card(
                 # Pokémon Name Section
                 html.Div(
                     dbc.Row(
-                        dbc.Col(html.H1(id='pokemon_name', style={'textAlign': 'center', 'color': 'white'})), 
+                        dbc.Col(html.H2(id='pokemon_name', style={'textAlign': 'center',
+                                                                  'color': 'white',
+                                                                  'font-size': '16px'})), 
                         justify="center", align="center"
                     ),
                 ),                                
@@ -26,7 +28,7 @@ pkmn_card = dbc.Card(
                     dbc.Row(
                         [
                             dbc.Col(
-                                html.Img(id='pokemon_image', style={'width': '100%'}),
+                                html.Img(id='pokemon_image', style={'height': '100%'}),
                                 md=6,
                                 style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'},
                                 className="poke-img",
@@ -46,15 +48,15 @@ pkmn_card = dbc.Card(
                     )
                 ),                              
                 
+                # Attack, Defense, and Speed
                 html.Div(
                     dbc.Row(
                         [
-                            # Attack, Defense, and Speed
                             dbc.Col(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_attack'),
-                                        html.P('ATK')
+                                        html.P('ATK', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
@@ -62,7 +64,7 @@ pkmn_card = dbc.Card(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_defense'),
-                                        html.P('DEF')
+                                        html.P('DEF', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
@@ -70,13 +72,13 @@ pkmn_card = dbc.Card(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_speed'),
-                                        html.P('SPD')
+                                        html.P('SPD', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
                         ],
-                        justify="center", align="center", 
-                        style={'padding': '6px 0px 0px 0px'}
+                        justify="center", align="center",
+                        style={'padding': '0px 0px 0px 0px', 'text-align': 'center'}
                     )
                 ),
 
@@ -88,7 +90,7 @@ pkmn_card = dbc.Card(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_satk'),
-                                        html.P('Sp. ATK')
+                                        html.P('Sp. ATK', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
@@ -96,7 +98,7 @@ pkmn_card = dbc.Card(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_sdef'),
-                                        html.P('Sp. DEF')
+                                        html.P('Sp. DEF', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
@@ -104,13 +106,13 @@ pkmn_card = dbc.Card(
                                 html.Div(
                                     [
                                         html.H3(id='pokemon_hp'),
-                                        html.P('HP')
+                                        html.P('HP', style={'text-align': 'center'})
                                     ]
                                 )
                             ),
                         ],
                         justify="center", align="center",
-                        style={'padding': '6px 0px 0px 0px'}
+                        style={'padding': '0px 0px 0px 0px', 'text-align': 'center'}
                     )
                 ),
                 

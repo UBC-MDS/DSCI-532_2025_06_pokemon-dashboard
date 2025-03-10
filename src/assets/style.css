@@ -57,14 +57,14 @@ p {
 
 .card-poke {    
     width: 210px;
-    height: 400px;
+    height: 320px;
     background: radial-gradient(circle at 50% 0%, var(--card-color, #ffffff) 36%, #ffffff 36%);
-    padding: 20px;
+    padding: 10px;
 }
 
 .poke-img {
     width: 100px;
-    height: 100px;
+    height: 80px;
     /* padding: 40px 0px 40px 0px; */
 }
 

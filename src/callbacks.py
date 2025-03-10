@@ -16,8 +16,7 @@ from .data import (
 ### ABOUT PAGE ###
 deployment_date = datetime.now().strftime('%Y-%m-%d')
 index_page = html.Div([
-    dcc.Link('About', href='/page-1'),
-    html.Br()
+    dcc.Link('About', href='/page-1')
 ])
 
 page_1_layout = html.Div([

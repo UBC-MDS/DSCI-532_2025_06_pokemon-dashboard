@@ -2,6 +2,7 @@ import pandas as pd
 
 df = pd.read_csv("data/raw/pokemon.csv")
 df['generation'] = df['generation'].astype('category')
+df = df.rename(columns={"against_fight": "against_fighting"})
 stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 df['average_stat'] = df[stats_columns].mean(axis=1)
 
@@ -13,7 +14,7 @@ type_colour = {
     "dragon": "#6F35FC",
     "electric": "#F7D02C",
     "fairy": "#D685AD",
-    "fight": "#C22E28",
+    "fighting": "#C22E28",
     "fire": "#EE8130",
     "flying": "#A98FF3",
     "grass": "#7AC74C",
@@ -63,7 +64,7 @@ scatterplot_options = [
 
 # Create dataframe containing type matchup
 type_effectiveness = df[['against_bug', 'against_dark', 'against_dragon',
-                         'against_electric', 'against_fairy', 'against_fight', 'against_fire',
+                         'against_electric', 'against_fairy', 'against_fighting', 'against_fire',
                          'against_flying', 'against_ghost', 'against_grass', 'against_ground',
                          'against_ice', 'against_normal', 'against_poison', 'against_psychic',
                          'against_rock', 'against_steel', 'against_water', 'name']]

@@ -8,7 +8,7 @@ from .data import (
 )
 
 ### COMPONENTS ###
-pkmn_dropdown = dcc.Dropdown(id="pokemon_dropdown", search_value="Pikachu", value=25, clearable=False)
+pkmn_dropdown = dcc.Dropdown(id="pokemon_dropdown", search_value="", value=25, clearable=False, placeholder="Type to Select a Pokémon")
 
 pkmn_card = dbc.Card(
     dbc.CardBody(

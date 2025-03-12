@@ -8,8 +8,7 @@ from .data import (
     df,
     type_colour,
     pkmn_labels,
-    type_effectiveness,
-    filter_data
+    type_effectiveness
 )
 
 ### ABOUT PAGE ###
@@ -115,9 +114,43 @@ def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1
     """
     Filters the Pokémon dataset based on the selected criteria for generation, types, and stat ranges.
     """
-    filtered_df = filter_data(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
-                              selected_attack_range, selected_speed_range, selected_sp_defense_range,
-                              selected_sp_attack_range, selected_defense_range)
+    filtered_df = df.copy()
+
+    # Filter by generation (default=None)
+    if selected_generation is not None and len(selected_generation) > 0:
+        filtered_df = filtered_df[filtered_df['generation'].isin(selected_generation)].copy()
+
+    # Filter by types (default=None)
+    if selected_type_1 is not None and len(selected_type_1) > 0:
+        filtered_df = filtered_df[filtered_df['type1'].isin(selected_type_1)]
+    
+    if selected_type_2 is not None and len(selected_type_2) > 0:
+        filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
+
+    # Filter by stat ranges
+    filtered_df = filtered_df[
+        (filtered_df['hp'] >= selected_hp_range[0]) & (filtered_df['hp'] <= selected_hp_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['attack'] >= selected_attack_range[0]) & (filtered_df['attack'] <= selected_attack_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['speed'] >= selected_speed_range[0]) & (filtered_df['speed'] <= selected_speed_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['sp_defense'] >= selected_sp_defense_range[0]) & (filtered_df['sp_defense'] <= selected_sp_defense_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['sp_attack'] >= selected_sp_attack_range[0]) & (filtered_df['sp_attack'] <= selected_sp_attack_range[1])
+    ]
+    filtered_df = filtered_df[
+        (filtered_df['defense'] >= selected_defense_range[0]) & (filtered_df['defense'] <= selected_defense_range[1])
+    ]
+
+    # Keep selected Pokémon so that we don't return empty df
+    if selected_pokemon_id not in filtered_df['pokedex_number']:
+        filtered_df = pd.concat([filtered_df, df[df['pokedex_number'] == selected_pokemon_id]])
+
     return filtered_df.to_dict('records')
 
 

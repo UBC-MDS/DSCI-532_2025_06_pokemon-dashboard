@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import requests
 
 df = pd.read_csv("data/raw/pokemon.csv")
 df['generation'] = df['generation'].astype('category')
@@ -71,3 +73,26 @@ type_effectiveness = df[['against_bug', 'against_dark', 'against_dragon',
 
 # Flip the rows and columns to obtain each pokemon as an iterable
 type_effectiveness = type_effectiveness.set_index("name").transpose()
+
+def get_latest_deployment_date():
+    try:
+        # Get the latest commit SHA from Render's environment variable
+        commit_sha = os.getenv("RENDER_GIT_COMMIT")
+
+        if commit_sha:
+            # Fetch the commit date from GitHub
+            repo_owner = "UBC-MDS"
+            repo_name = "DSCI-532_2025_06_pokemon-dashboard"
+            url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits/{commit_sha}"
+            
+            response = requests.get(url)
+            if response.status_code == 200:
+                commit_data = response.json()
+                return commit_data["commit"]["committer"]["date"]
+        
+        return "Deployment date unavailable"
+
+    except Exception as e:
+        return f"Error fetching deployment date: {str(e)}"
+    
+deployment_date = get_latest_deployment_date()

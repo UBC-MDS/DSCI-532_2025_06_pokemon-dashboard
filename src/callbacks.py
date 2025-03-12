@@ -3,16 +3,17 @@ from dash.exceptions import PreventUpdate
 from datetime import datetime
 import pandas as pd
 import altair as alt
+import os
 
 from .data import (
     df,
     type_colour,
     pkmn_labels,
-    type_effectiveness
+    type_effectiveness,
+    deployment_date
 )
 
 ### ABOUT PAGE ###
-deployment_date = datetime.now().strftime('%Y-%m-%d')
 index_page = html.Div([
     dcc.Link('About', href='/page-1')
 ])
@@ -21,6 +22,7 @@ page_1_layout = html.Div([
     html.H2('About Pokédash'),
     html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
     html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
+    html.P(f"Deployed on: {deployment_date}"),
     html.Div(id='page-1-content'),
     dcc.Link('Close', href='/'),
 ])

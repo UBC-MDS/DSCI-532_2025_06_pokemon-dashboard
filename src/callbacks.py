@@ -8,9 +8,8 @@ from .data import (
     df,
     type_colour,
     pkmn_labels,
-    type_options,
     type_effectiveness,
-    get_top_7
+    filter_data
 )
 
 ### ABOUT PAGE ###
@@ -96,20 +95,49 @@ def update_pkmn_card(selected_pokemon_id):
     return image_url, type_1_path, type_2_path, pokemon_attack, pokemon_defense, pokemon_speed, pokemon_satk, pokemon_sdef, pokemon_hp, pokemon_name, card_style
 
 
+### FILTER DATA ###
+@callback(
+    Output("pkmn-data", "data"),
+    Input("pokemon_dropdown", "value"),
+    Input("generation_dropdown", "value"),
+    Input("type1_dropdown", "value"),
+    Input("type2_dropdown", "value"),
+    Input("hp_range_slider", "value"),
+    Input("attack_range_slider", "value"),
+    Input("speed_range_slider", "value"),
+    Input("sp_defense_range_slider", "value"),
+    Input("sp_attack_range_slider", "value"),
+    Input("defense_range_slider", "value")
+)
+def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
+                       selected_attack_range, selected_speed_range, selected_sp_defense_range,
+                       selected_sp_attack_range, selected_defense_range):
+    """
+    Filters the Pokémon dataset based on the selected criteria for generation, types, and stat ranges.
+    """
+    filtered_df = filter_data(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
+                              selected_attack_range, selected_speed_range, selected_sp_defense_range,
+                              selected_sp_attack_range, selected_defense_range)
+    return filtered_df.to_dict('records')
+
+
 ### POKEMON STATS SCATTERPLOT ###
 @callback(
     Output("scatter", "spec"),
     Input("x_col", "value"),
     Input("y_col", "value"),
-    Input("pokemon_dropdown", "value")
+    Input("pokemon_dropdown", "value"),
+    Input("pkmn-data", "data")
 )
-def create_stats_scatter(x_col, y_col, selected_pokemon_id):
+def create_stats_scatter(x_col, y_col, selected_pokemon_id, filtered_df):
     """
     Create scatterplot of Pokémon stats.
     """
+    filtered_df = pd.DataFrame(filtered_df)
+
     brush = alt.selection_interval()
     click = alt.selection_point(fields=['generation'], bind='legend', empty='all')
-    base = alt.Chart(df, width="container").mark_point(
+    base = alt.Chart(filtered_df, width="container").mark_point(
         filled=True,
         size=100
     ).encode(
@@ -141,37 +169,19 @@ def create_stats_scatter(x_col, y_col, selected_pokemon_id):
 @callback(
     Output("top_7_chart", "spec"),
     Input("pokemon_dropdown", "value"),
-    Input("generation_dropdown", "value"),
-    Input("type1_dropdown", "value"),
-    Input("type2_dropdown", "value"),
-    Input("hp_range_slider", "value"),
-    Input("attack_range_slider", "value"),
-    Input("speed_range_slider", "value"),
-    Input("sp_defense_range_slider", "value"),
-    Input("sp_attack_range_slider", "value"),
-    Input("defense_range_slider", "value")
+    Input("pkmn-data", "data")
 )
-def create_top7_histogram(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
-                          selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range,
-                          selected_defense_range):
+def create_top7_histogram(selected_pokemon_id, filtered_df):
     """
     Creates a bar chart displaying the top 7 Pokémon based on their 
     average stats and highlights the selected Pokémon.
     """
-    if not selected_generation:
-        selected_generation = list(range(1, 8))
-
-    if not selected_type_1:
-        selected_type_1 = [option['value'] for option in type_options]
-
-    if not selected_type_2:
-        selected_type_2 = [option['value'] for option in type_options]
-
+    filtered_df = pd.DataFrame(filtered_df)
+    
     # Filter the selected Pokémon based on the dropdown value
     attributes = ['name', 'average_stat', 'hp', 'attack', 'defense', 'speed', 'sp_attack', 'sp_defense']
     selected_pokemon = df[df['pokedex_number'] == selected_pokemon_id][attributes]
-    top_7 = get_top_7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
-                    selected_attack_range, selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
+    top_7 = filtered_df[attributes].sort_values(by='average_stat', ascending=False).head(7)
 
     # If the selected Pokémon is not in the top 7, we add it
     if selected_pokemon['name'].values[0] not in top_7['name'].values:
@@ -202,13 +212,15 @@ def create_top7_histogram(selected_pokemon_id, selected_generation, selected_typ
 @callback(
     Output("boxplot", "spec"),
     Input("x_col_boxplot", "value"),
-    Input("pokemon_dropdown", "value")
+    Input("pokemon_dropdown", "value"),
+    Input("pkmn-data", "data")
 )
-def create_type_boxplot(x_col, selected_pokemon_id):
+def create_type_boxplot(x_col, selected_pokemon_id, filtered_df):
     """
     Creates a boxplot for a given stat (specified by `x_col`) across Pokémon types and highlights the selected Pokémon.
     """
-    base = alt.Chart(df, width="container").mark_boxplot().encode(
+    filtered_df = pd.DataFrame(filtered_df)
+    base = alt.Chart(filtered_df, width="container").mark_boxplot().encode(
         x=x_col,   # Chosen stat
         y="type1",   # Just type1 for now. Can be changed to accomodate dropdown of type1 or type2 later
         color=alt.Color(

@@ -73,17 +73,22 @@ type_effectiveness = df[['against_bug', 'against_dark', 'against_dragon',
 type_effectiveness = type_effectiveness.set_index("name").transpose()
 
 ### FUNCTIONS ###
-def filter_data(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range,
+def filter_data(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range,
                selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range):
     """
     Filters the Pokémon dataset based on the selected criteria for generation, types, and stat ranges.
     """
+    filtered_df = df.copy()
+
     # Filter by generation
-    filtered_df = df[df['generation'].isin(selected_generation)].copy()
+    if selected_generation:
+        filtered_df = df[df['generation'].isin(selected_generation)].copy()
 
     # Filter by types
-    filtered_df = filtered_df[filtered_df['type1'].isin(selected_type_1)]
-    filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
+    if selected_type_1:
+        filtered_df = filtered_df[filtered_df['type1'].isin(selected_type_1)]
+    if selected_type_2:
+        filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
 
     # Filter by stat ranges
     filtered_df = filtered_df[
@@ -104,18 +109,9 @@ def filter_data(selected_generation, selected_type_1, selected_type_2, selected_
     filtered_df = filtered_df[
         (filtered_df['defense'] >= selected_defense_range[0]) & (filtered_df['defense'] <= selected_defense_range[1])
     ]
+
+    # Keep selected Pokémon so that we don't return empty df
+    if selected_pokemon_id not in filtered_df['pokedex_number']:
+        filtered_df = pd.concat([filtered_df, df[df['pokedex_number'] == selected_pokemon_id]])
+
     return filtered_df
-
-def get_top_7(attributes, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
-            selected_attack_range, selected_speed_range, selected_sp_defense_range,
-            selected_sp_attack_range, selected_defense_range):
-    """
-    Calculate average stats for each Pokémon.
-    """
-    filtered_df = filter_data(selected_generation, selected_type_1, selected_type_2, selected_hp_range, selected_attack_range,
-                             selected_speed_range, selected_sp_defense_range, selected_sp_attack_range, selected_defense_range)
-
-    # Sort by average stats and return top 7
-    top_7 = filtered_df[attributes].sort_values(by='average_stat', ascending=False).head(7)
-
-    return top_7

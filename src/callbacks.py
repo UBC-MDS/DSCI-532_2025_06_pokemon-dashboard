@@ -1,9 +1,7 @@
 from dash import dcc, html, Input, Output, callback
 from dash.exceptions import PreventUpdate
-from datetime import datetime
 import pandas as pd
 import altair as alt
-import os
 
 from .data import (
     df,

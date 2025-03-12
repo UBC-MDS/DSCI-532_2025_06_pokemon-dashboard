@@ -34,6 +34,7 @@ server = app.server
 
 # Layout
 app.layout = dbc.Container([
+    dcc.Store(id='pkmn-data'),
     dbc.Row([
         # Navigation Bar Column
         dbc.Col([
@@ -150,4 +151,4 @@ app.layout = dbc.Container([
 
 # Run the app/dashboard
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

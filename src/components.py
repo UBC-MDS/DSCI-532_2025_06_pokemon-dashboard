@@ -127,7 +127,6 @@ generation_dropdown = dcc.Dropdown(
                     options=[{'label': str(i), 'value': i} for i in range(1, 8)],  # Generations 1 to
                     multi=True,
                     placeholder="Select Generation(s)",
-                    value=[1, 3, 5],
                     style={'width': '100%'}
                 )
 

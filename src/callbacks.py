@@ -169,19 +169,18 @@ def create_stats_scatter(x_col, y_col, selected_pokemon_id, filtered_df):
     filtered_df = pd.DataFrame(filtered_df)
 
     brush = alt.selection_interval()
-    click = alt.selection_point(fields=['generation'], bind='legend', empty='all')
     base = alt.Chart(filtered_df, width="container").mark_point(
         filled=True,
-        size=100
+        size=100,
+        opacity=0.5
     ).encode(
         x=x_col,
         y=y_col,
         tooltip="name",
         color=alt.condition(brush, 'generation', alt.value('lightgray')),
-        opacity=alt.condition(click, alt.value(0.9), alt.value(0.2))
     ).properties(
         height=400
-    ).add_params(brush, click)
+    ).add_params(brush)
 
     selected_plot = alt.Chart(
         df.loc[df['pokedex_number'] == selected_pokemon_id],

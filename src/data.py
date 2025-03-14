@@ -2,11 +2,11 @@ import pandas as pd
 import os
 import requests
 
-df = pd.read_csv("data/raw/pokemon.csv")
+df = pd.read_parquet("data/processed/pokemon.parquet")
 df['generation'] = df['generation'].astype('category')
-df = df.rename(columns={"against_fight": "against_fighting"})
-stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
-df['average_stat'] = df[stats_columns].mean(axis=1)
+# df = df.rename(columns={"against_fight": "against_fighting"})
+# stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
+# df['average_stat'] = df[stats_columns].mean(axis=1)
 
 pkmn_labels = df[["name", "pokedex_number"]]
 pkmn_labels = pkmn_labels.rename(columns={"name": "label", "pokedex_number": "value"})

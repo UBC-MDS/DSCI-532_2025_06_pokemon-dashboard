@@ -4,6 +4,8 @@ import requests
 
 df = pd.read_parquet("data/processed/pokemon.parquet")
 df['generation'] = df['generation'].astype('category')
+# df=df.drop(columns=["abilities",'base_egg_steps', 'base_happiness', 'capture_rate',
+#        'classfication','experience_growth','japanese_name','percentage_male','is_legendary'])
 # df = df.rename(columns={"against_fight": "against_fighting"})
 # stats_columns = ['sp_attack', 'sp_defense', 'attack', 'defense', 'hp', 'speed']
 # df['average_stat'] = df[stats_columns].mean(axis=1)

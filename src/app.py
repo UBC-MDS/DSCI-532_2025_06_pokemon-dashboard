@@ -1,5 +1,6 @@
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
+from flask_caching import Cache
 
 from .callbacks import (
     toggle_popup,
@@ -40,7 +41,9 @@ app = Dash(
 )
 server = app.server
 
+
 # Layout
+
 app.layout = dbc.Container([
     dcc.Store(id='pkmn-data'),
     dbc.Row([

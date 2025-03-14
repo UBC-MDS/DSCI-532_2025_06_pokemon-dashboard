@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 import altair as alt
 import os
+from flask_caching import Cache
+from .app import server
 
 from .data import (
     df,
@@ -14,6 +16,13 @@ from .data import (
 )
 
 from .components import create_popup  # Import the create_popup function
+cache = Cache(
+    server,
+    config={
+        'CACHE_TYPE': 'filesystem',
+        'CACHE_DIR': 'tmp'
+    }
+)
 
 ### ABOUT PAGE ###
 @callback(
@@ -77,6 +86,7 @@ def update_pkmn_select_options(search_value):
     Output('pokemon_card', 'style'), 
     Input('pokemon_dropdown', 'value')
 )
+@cache.memoize()
 def update_pkmn_card(selected_pokemon_id):
     """
     Display image and type of selected Pokémon.
@@ -169,6 +179,7 @@ def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1
     Input("pokemon_dropdown", "value"),
     Input("pkmn-data", "data")
 )
+@cache.memoize()
 def create_stats_scatter(x_col, y_col, selected_pokemon_id, filtered_df):
     """
     Create scatterplot of Pokémon stats.

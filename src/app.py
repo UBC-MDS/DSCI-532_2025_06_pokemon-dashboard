@@ -2,7 +2,7 @@ from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 
 from .callbacks import (
-    display_about,
+    toggle_popup,
     update_pkmn_select_options,
     update_pkmn_card,
     create_stats_scatter,
@@ -26,10 +26,18 @@ from .components import (
     pkmn_stats_scatterplot,
     top7_pkmn_bar_chart,
     stat_distributions_boxplot,
-    type_advantages_bar_chart
+    type_advantages_bar_chart,
+    title_and_about
 )
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(
+    __name__, 
+    external_stylesheets=[
+        dbc.themes.BOOTSTRAP,
+    ],
+    suppress_callback_exceptions=True,
+    title='Pokédash'
+)
 server = app.server
 
 # Layout
@@ -38,18 +46,8 @@ app.layout = dbc.Container([
     dbc.Row([
         # Navigation Bar Column
         dbc.Col([
-            # Title
-            html.Div([
-                html.H1("Pokédash", className="poke-title"),
-                ],
-            ),
-            
-            # About Page
-            html.Div([
-                dcc.Location(id='url', refresh=False),
-                html.Div(id='about-page-content', className="about-page-content"),
-                ]
-            ),
+            # Title and About Section
+            title_and_about,
 
             # Pokemon Dropdown
             html.Div([
@@ -119,7 +117,7 @@ app.layout = dbc.Container([
                 ], style={'flex': 1, 'marginTop': '1vh'}),  # Right column
             ], style={'display': 'flex', 'marginTop': '1vh'}),  # Flex container for two columns of RangeSliders
 
-        ],  width=2, style={'backgroundColor': 'white', 'height': '110vh', 'display': 'flex', 'flexDirection': 'column', "padding": "2vh"}),
+        ],  width=2, style={'backgroundColor': 'white', 'height': '130vh', 'display': 'flex', 'flexDirection': 'column', "padding": "2vh"}),
 
         # First Output Column
         dbc.Col([

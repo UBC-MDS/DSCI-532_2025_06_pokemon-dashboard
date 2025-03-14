@@ -4,7 +4,8 @@ import dash_vega_components as dvc
 
 from .data import (
     type_options,
-    scatterplot_options
+    scatterplot_options,
+    deployment_date
 )
 
 ### COMPONENTS ###
@@ -297,3 +298,88 @@ type_advantages_bar_chart = dbc.Card(
                     ),
                     className="card-chart",
                 )
+
+title_and_about = html.Div([
+    html.Img(src="/assets/pokeball.png", style={'height': '30px', 'marginRight': '5px', 'marginBottom': '10px'}),
+    html.H1("Pokédash", className="poke-title"),
+    html.Button('?', 
+        id='about-button', 
+        style={
+            'borderRadius': '50%',
+            'width': '30px',
+            'height': '30px',
+            'fontSize': '20px',
+            'cursor': 'pointer',
+            'marginLeft': '10px',
+            'marginBottom': '10px',
+            'border': 'none',
+            'backgroundColor': '#f0f0f0',
+            'transition': 'background-color 0.3s',
+        }
+    ),
+    html.Div(id='about-page-content'),
+], style={'display': 'flex', 'alignItems': 'center'})
+
+def create_popup():
+    """Create the about popup content with animations and overlay"""
+    return html.Div([
+        # Background overlay
+        html.Div(
+            className='popup-overlay',
+            id='popup-overlay',
+            n_clicks=0,
+            style={
+                'position': 'fixed',
+                'top': 0,
+                'left': 0,
+                'width': '100%',
+                'height': '100%',
+                'backgroundColor': 'rgba(0, 0, 0, 0.5)',
+                'zIndex': 999,
+                'cursor': 'pointer',
+                'animation': 'fade-in 0.3s ease-out forwards',
+            }
+        ),
+        # Popup content with a close button
+        html.Div([
+            # Close button in the top right
+            html.Button(
+                "×",
+                id='close-popup-button',
+                n_clicks=0,
+                style={
+                    'position': 'absolute',
+                    'right': '15px',
+                    'top': '15px',
+                    'fontSize': '24px',
+                    'color': '#666',
+                    'padding': '5px 10px',
+                    'cursor': 'pointer',
+                    'border': 'none',
+                    'background': 'none',
+                }
+            ),
+            html.H2('About Pokédash', style={'fontSize': '2em', 'marginBottom': '20px'}),
+            html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster", 
+                   style={'fontSize': '1.2em', 'marginBottom': '15px'}),
+            html.P("This is an app created by Agam, Albert, Nicholas, and Shannon",
+                   style={'fontSize': '1.2em', 'marginBottom': '15px'}),
+            html.P(f"Deployed on: {deployment_date}",
+                   style={'fontSize': '1.2em'}),
+        ], 
+        className='popup-content',
+        style={
+            'position': 'fixed',
+            'top': '50%',
+            'left': '50%',
+            'transform': 'translate(-50%, -50%)',
+            'backgroundColor': 'white',
+            'padding': '40px',
+            'borderRadius': '10px',
+            'boxShadow': '0 0 20px rgba(0,0,0,0.2)',
+            'minWidth': '500px',
+            'maxWidth': '80%',
+            'zIndex': 1000,
+            'animation': 'popup-scale-in 0.3s ease-out forwards',
+        })
+    ])

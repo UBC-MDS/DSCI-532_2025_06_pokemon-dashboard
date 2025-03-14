@@ -119,7 +119,7 @@ app.layout = dbc.Container([
                 ], style={'flex': 1, 'marginTop': '1vh'}),  # Right column
             ], style={'display': 'flex', 'marginTop': '1vh'}),  # Flex container for two columns of RangeSliders
 
-        ],  width=2, style={'backgroundColor': 'white', 'height': '110vh', 'display': 'flex', 'flexDirection': 'column', "padding": "2vh"}),
+        ],  width=2, style={'backgroundColor': 'white', 'height': '140vh', 'display': 'flex', 'flexDirection': 'column', "padding": "2vh"}),
 
         # First Output Column
         dbc.Col([

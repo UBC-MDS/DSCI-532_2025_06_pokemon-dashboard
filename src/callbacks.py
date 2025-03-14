@@ -1,4 +1,4 @@
-from dash import dcc, html, Input, Output, callback
+from dash import dcc, html, Input, Output, callback, State, ctx
 from dash.exceptions import PreventUpdate
 from datetime import datetime
 import pandas as pd
@@ -13,34 +13,38 @@ from .data import (
     deployment_date
 )
 
-### ABOUT PAGE ###
-index_page = html.Div([
-    dcc.Link('About', href='/page-1')
-])
+from .components import create_popup  # Import the create_popup function
 
-page_1_layout = html.Div([
-    html.H2('About Pokédash'),
-    html.P("Pokédash is your personal Pokéguide to understand your lil pocket monster"),
-    html.P("This is an app created by Agam, Albert, Nicholas, and Shannon"),
-    html.P(f"Deployed on: {deployment_date}"),
-    html.Div(id='page-1-content'),
-    dcc.Link('Close', href='/'),
-])
+### ABOUT PAGE ###
+@callback(
+    Output('about-page-content', 'children'),
+    Input('about-button', 'n_clicks'),
+    prevent_initial_call=True
+)
+def toggle_popup(n_clicks):
+    """
+    Show the popup when the about button is clicked
+    """
+    if n_clicks is None or n_clicks == 0:
+        raise PreventUpdate
+    
+    return create_popup()
 
 @callback(
-        Output('about-page-content', 'children'),
-        Input('url', 'pathname')
+    Output('about-page-content', 'children', allow_duplicate=True),
+    [Input('close-popup-button', 'n_clicks'),
+     Input('popup-overlay', 'n_clicks')],
+    prevent_initial_call=True
 )
-def display_about(pathname):
+def close_popup(close_clicks, overlay_clicks):
     """
-    This toggles the "About" page; displays the layout of
-    the page based on the selected pathname.
+    Close the popup when the close button or overlay is clicked
     """
-    if pathname == '/page-1':
-        return page_1_layout
-    else:
-        return index_page
-    # You could also return a 404 "URL not found" page here
+    if (close_clicks is None or close_clicks == 0) and (overlay_clicks is None or overlay_clicks == 0):
+        raise PreventUpdate
+    
+    # Return None to close the popup
+    return None
 
 
 ### POKEMON DROPDOWN ###
@@ -128,6 +132,7 @@ def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1
     
     if selected_type_2 is not None and len(selected_type_2) > 0:
         filtered_df = filtered_df[filtered_df['type2'].isin(selected_type_2)]
+    
 
     # Filter by stat ranges
     filtered_df = filtered_df[

@@ -132,19 +132,19 @@ app.layout = dbc.Container([
                 dbc.Col([
                     # Right Column Top Row
                     html.Div([
-                        top7_pkmn_bar_chart,
-                    ], style={'padding': '1vh', 'margin': '0 0 1vh 0'})
-                ], width=5),  # column width
+                        stat_distributions_boxplot,
+                    ], style={'padding': '1vh', 'margin': '1vh 0 0 0'})
+                ], width=5),  # Right column width
             ]),
             dbc.Row([
                 # Second Row
                 dbc.Col([
                     # Left Column Second Row
                     html.Div([
-                        stat_distributions_boxplot,
-                    ], style={'padding': '1vh', 'margin': '1vh 0 0 0'})
-                ], width=5),  # Right column width
-
+                        top7_pkmn_bar_chart,
+                    ], style={'padding': '1vh', 'margin': '0 0 1vh 0'})
+                ], width=5),  # column width
+                
                 dbc.Col([
                     # Right Column Second Row
                     html.Div([

@@ -38,9 +38,9 @@ app = Dash(
     suppress_callback_exceptions=True,
     title='Pokédash'
 )
-server = app.server
-
+server=app.server
 # Layout
+
 app.layout = dbc.Container([
     dcc.Store(id='pkmn-data'),
     dbc.Row([
@@ -149,4 +149,4 @@ app.layout = dbc.Container([
 
 # Run the app/dashboard
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

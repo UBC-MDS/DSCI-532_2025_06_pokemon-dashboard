@@ -1,6 +1,5 @@
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
-from flask_caching import Cache
 
 from .callbacks import (
     toggle_popup,
@@ -39,8 +38,6 @@ app = Dash(
     suppress_callback_exceptions=True,
     title='Pokédash'
 )
-server = app.server
-
 
 # Layout
 

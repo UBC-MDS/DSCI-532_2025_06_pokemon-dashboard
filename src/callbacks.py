@@ -4,8 +4,7 @@ from datetime import datetime
 import pandas as pd
 import altair as alt
 import os
-from flask_caching import Cache
-from .app import server
+import joblib
 
 from .data import (
     df,
@@ -16,13 +15,7 @@ from .data import (
 )
 
 from .components import create_popup  # Import the create_popup function
-cache = Cache(
-    server,
-    config={
-        'CACHE_TYPE': 'filesystem',
-        'CACHE_DIR': 'tmp'
-    }
-)
+memory = joblib.Memory("tmp", verbose=0)
 
 ### ABOUT PAGE ###
 @callback(
@@ -86,7 +79,6 @@ def update_pkmn_select_options(search_value):
     Output('pokemon_card', 'style'), 
     Input('pokemon_dropdown', 'value')
 )
-@cache.memoize()
 def update_pkmn_card(selected_pokemon_id):
     """
     Display image and type of selected Pokémon.
@@ -124,6 +116,7 @@ def update_pkmn_card(selected_pokemon_id):
     Input("sp_attack_range_slider", "value"),
     Input("defense_range_slider", "value")
 )
+@memory.cache()
 def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1, selected_type_2, selected_hp_range,
                        selected_attack_range, selected_speed_range, selected_sp_defense_range,
                        selected_sp_attack_range, selected_defense_range):
@@ -179,7 +172,7 @@ def global_filter_data(selected_pokemon_id, selected_generation, selected_type_1
     Input("pokemon_dropdown", "value"),
     Input("pkmn-data", "data")
 )
-@cache.memoize()
+@memory.cache()
 def create_stats_scatter(x_col, y_col, selected_pokemon_id, filtered_df):
     """
     Create scatterplot of Pokémon stats.
@@ -265,6 +258,7 @@ def create_top7_histogram(selected_pokemon_id, filtered_df):
     Input("pokemon_dropdown", "value"),
     Input("pkmn-data", "data")
 )
+@memory.cache()
 def create_type_boxplot(x_col, selected_pokemon_id, filtered_df):
     """
     Creates a boxplot for a given stat (specified by `x_col`) across Pokémon types and highlights the selected Pokémon.

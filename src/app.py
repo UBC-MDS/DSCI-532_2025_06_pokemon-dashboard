@@ -38,7 +38,7 @@ app = Dash(
     suppress_callback_exceptions=True,
     title='Pokédash'
 )
-
+server=app.server
 # Layout
 
 app.layout = dbc.Container([

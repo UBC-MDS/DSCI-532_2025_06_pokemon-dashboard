@@ -8,3 +8,4 @@ src/__pycache__/app.cpython-311.pyc
 src/__pycache__/callbacks.cpython-311.pyc
 src/__pycache__/components.cpython-311.pyc
 src/__pycache__/data.cpython-311.pyc
+src/temp/*

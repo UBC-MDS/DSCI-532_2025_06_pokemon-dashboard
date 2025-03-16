@@ -119,31 +119,40 @@ app.layout = dbc.Container([
 
         ],  width=2, style={'backgroundColor': 'white', 'height': '130vh', 'display': 'flex', 'flexDirection': 'column', "padding": "2vh"}),
 
-        # First Output Column
         dbc.Col([
-            # First Row
-            html.Div([
-                pkmn_stats_scatterplot,
-            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
+            dbc.Row([
+                # First Row
+                dbc.Col([
+                    # Left Column Top Row
+                    html.Div([
+                        pkmn_stats_scatterplot,
+                    ], style={'padding': '1vh', 'margin': '1vh 0 0 0'})
+                ], width=5),  # column width
 
-            # Second Row
-            html.Div([
-                top7_pkmn_bar_chart,
-            ], style={'padding': '1vh', 'margin': '0 0 1vh 0'})
-        ], width=5),  # column width
-
-        # Second Output Column
-        dbc.Col([
-            # First Row
-            html.Div([
-                stat_distributions_boxplot,
-            ], style={'padding': '1vh', 'margin': '1vh 0 0 0'}),
-
-            # Second Row
-            html.Div([
-                type_advantages_bar_chart,
-            ], style={'padding': '1vh', 'margin': '0 0 1vh 0'}),
-        ], width=5)  # Right column width
+                dbc.Col([
+                    # Right Column Top Row
+                    html.Div([
+                        stat_distributions_boxplot,
+                    ], style={'padding': '1vh', 'margin': '1vh 0 0 0'})
+                ], width=5),  # Right column width
+            ]),
+            dbc.Row([
+                # Second Row
+                dbc.Col([
+                    # Left Column Second Row
+                    html.Div([
+                        top7_pkmn_bar_chart,
+                    ], style={'padding': '1vh', 'margin': '0 0 1vh 0'})
+                ], width=5),  # column width
+                
+                dbc.Col([
+                    # Right Column Second Row
+                    html.Div([
+                        type_advantages_bar_chart,
+                    ], style={'padding': '1vh', 'margin': '0 0 1vh 0'})
+                ], width=5),  # Right column width
+            ])
+        ])
     ], align="start")
 ], fluid=True, style={"height": "110vh",})
 

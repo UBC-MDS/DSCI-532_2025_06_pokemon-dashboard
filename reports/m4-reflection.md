@@ -26,8 +26,10 @@ Dashboard Strengths:
 - Ability to compare many different stats in one place.
 - Ability for the user to change the chart axes to statistics of their preference, tailoring the experience for what they’d like to explore.
 - Overall visually appealing with the Pokemon sprites included on the left panel, as well as plotted on 2 of the charts.
+
 Dashboard Limitations:
 - The data is static, so it will not be updated in real time if new Pokemon are created or added. 
 - Currently no option to select and compare more than one pokemon at once
+
 Potential Future Improvements:
 - Adding the ability to select and then compare 2-3 pokemon at once, (rather than selecting one and comparing it to all Pokemon).

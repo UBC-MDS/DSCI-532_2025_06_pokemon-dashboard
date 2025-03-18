@@ -1,6 +1,6 @@
 # Pokémon Dashboard
 
-![m2-pokedash](/img/demo.gif)
+![](/img/demo.gif)
 
 
 ## 🚀 Motivation
@@ -43,7 +43,7 @@ conda activate 532_pokemon
 3. Run the app
 
 ```sh
-python src/app.py
+python -m src.app
 ```
 
 The app should now be running at http://127.0.0.1:8050/
